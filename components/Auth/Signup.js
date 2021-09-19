@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 import {
   Button,
   Avatar,
@@ -12,8 +13,35 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import axios from "axios";
 
 const Signup = () => {
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    password: "",
+    category: "",
+  });
+
+  const onChange = (e) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formState);
+    await signup();
+  };
+
+  const signup = async () => {
+    try {
+      const res = await axios.post("/api/signup", { ...formState });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <HomepageContainer container>
@@ -29,7 +57,7 @@ const Signup = () => {
                   <Typography component="h1" variant="h5">
                     Sign Up
                   </Typography>
-                  <SignupForm>
+                  <SignupForm onSubmit={onSubmit}>
                     <TextField
                       variant="outlined"
                       margin="normal"
@@ -38,6 +66,7 @@ const Signup = () => {
                       id="name"
                       label="Full Name"
                       name="name"
+                      onChange={onChange}
                     />
                     <TextField
                       variant="outlined"
@@ -48,6 +77,7 @@ const Signup = () => {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      onChange={onChange}
                     />
                     <TextField
                       variant="outlined"
@@ -59,8 +89,13 @@ const Signup = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      onChange={onChange}
                     />
-                    <RadioGroup aria-label="category" name="category">
+                    <RadioGroup
+                      aria-label="category"
+                      name="category"
+                      onChange={onChange}
+                    >
                       <FormControlLabel
                         value="user"
                         control={<StyledRadio color="primary" />}

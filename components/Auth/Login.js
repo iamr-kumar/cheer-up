@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import {
   Button,
   Avatar,
@@ -15,6 +18,32 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 const Login = () => {
+  const router = useRouter();
+
+  const [formState, setFormState] = useState({ email: "", password: "" });
+
+  const onChange = (e) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formState);
+    await onLogin();
+  };
+
+  const onLogin = async () => {
+    try {
+      const res = await axios.post("/api/login", { ...formState });
+      if (res.status === 200) {
+        console.log(res.data);
+        router.push("/user/profile");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <HomepageContainer container>
@@ -30,7 +59,7 @@ const Login = () => {
                   <Typography component="h1" variant="h5">
                     Login
                   </Typography>
-                  <SignupForm>
+                  <SignupForm onSubmit={onSubmit}>
                     <TextField
                       variant="outlined"
                       margin="normal"
@@ -41,6 +70,7 @@ const Login = () => {
                       name="email"
                       autoComplete="email"
                       autoFocus
+                      onChange={onChange}
                     />
                     <TextField
                       variant="outlined"
@@ -52,6 +82,7 @@ const Login = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      onChange={onChange}
                     />
                     {/* <FormControlLabel
                       control={<Checkbox value="remember" color="primary" />}

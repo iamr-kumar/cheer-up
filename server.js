@@ -1,4 +1,5 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 const server = require("http").Server(app);
 const next = require("next");
 
@@ -12,10 +13,13 @@ require("dotenv").config();
 const connectDB = require("./config/connectDB");
 
 const PORT = process.env.PORT || 3000;
-
+app.use(express.json());
 connectDB();
 
 nextApp.prepare().then(() => {
+  app.use("/api/signup", require("./api/signup"));
+  app.use("/api/login", require("./api/auth"));
+
   app.all("*", (req, res) => handle(req, res));
 
   server.listen(PORT, (err) => {
