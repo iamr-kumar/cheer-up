@@ -5,12 +5,12 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 // const config = require("config");
 const { check, validationResult } = require("express-validator");
-// const auth = require("./../../middleware/auth");
+const auth = require("./../middleware/auth");
 
 // @route GET api/auth
 // @desc test route
 // @access Private
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     // console.log(req.user.id);
     const user = await User.findById(req.user.id).select("-password");
