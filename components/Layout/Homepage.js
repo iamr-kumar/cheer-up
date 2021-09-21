@@ -8,7 +8,7 @@ const Homepage = () => {
       <HomepageContainer container>
         <Grid container item lg={6} md={12}>
           <InfoContainer>
-            <h3>HowYouDoin'?</h3>
+            <h3>Cheer Up</h3>
             <MainContainer>
               <Container>
                 <h1>Relax.</h1>

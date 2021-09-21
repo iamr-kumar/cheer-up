@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import cookie from "js-cookie";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext();
 
@@ -14,7 +15,7 @@ const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   const [loading, setLoading] = useState(true);
-
+  const router = useRouter();
   const setToken = (token) => {
     cookie.set("token", token, { expires: 7 });
     if (token) {
@@ -25,15 +26,19 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     loadUser()
-      .then(() => console.log("User loaded!"))
+      .then(() => router.push("/user/profile"))
       .catch((err) => console.log(err));
+    setLoading(false);
   }, []);
 
   const loadUser = async () => {
-    setLoading(true);
     const token = cookie.get("token");
     console.log(token);
+    if (!token) {
+      throw new Error("No token");
+    }
     setToken(token);
     try {
       const res = await axios.get(`/api/login`);
@@ -44,7 +49,6 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
       throw err;
     }
-    setLoading(false);
   };
 
   const signup = async (name, email, password, category) => {
@@ -53,7 +57,7 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post("/api/signup", body, config);
       console.log(res.data);
-
+      setToken(res.data.token);
       await loadUser();
     } catch (err) {
       console.log(err);
@@ -66,7 +70,7 @@ const AuthProvider = ({ children }) => {
     const body = JSON.stringify({ email, password });
     try {
       const res = await axios.post("/api/login", body, config);
-      console.log(res.data);
+      setToken(res.data.token);
       await loadUser();
     } catch (err) {
       console.log(err);

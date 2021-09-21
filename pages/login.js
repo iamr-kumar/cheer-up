@@ -14,6 +14,7 @@ import {
   Typography,
   Container,
   CssBaseline,
+  CircularProgress,
 } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -24,6 +25,7 @@ const Login = () => {
   const { login } = useAuth();
 
   const [formState, setFormState] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
   const onChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -32,11 +34,13 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(formState);
+    setLoading(true);
     try {
       await login(formState.email, formState.password);
       router.push("/user/profile");
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -48,7 +52,7 @@ const Login = () => {
       <HomepageContainer container>
         <Grid container item lg={6} md={12}>
           <InfoContainer>
-            <h3>HowYouDoin'?</h3>
+            <h3>Cheer Up</h3>
             <SingupContainer>
               <Container maxWidth="xs">
                 <FormContainer>
@@ -93,7 +97,11 @@ const Login = () => {
                       variant="contained"
                       color="primary"
                     >
-                      Sign In
+                      {loading ? (
+                        <CircularProgress color="inherit" />
+                      ) : (
+                        "Sign In"
+                      )}
                     </SubmitButton>
                     <Grid container>
                       <Grid item>

@@ -30,18 +30,22 @@ const Signup = () => {
 
   const { signup } = useAuth();
 
+  const [loading, setLoading] = useState(false);
+
   const onChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formState);
+    // console.log(formState);
+    setLoading(true);
     try {
       await signup(name, email, password, category);
       router.push("/user/profile");
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -53,7 +57,7 @@ const Signup = () => {
       <HomepageContainer container>
         <Grid container item lg={6} md={12}>
           <InfoContainer>
-            <h3>HowYouDoin'?</h3>
+            <h3>Cheer Up</h3>
             <SingupContainer>
               <Container maxWidth="xs">
                 <FormContainer>
@@ -119,7 +123,11 @@ const Signup = () => {
                       variant="contained"
                       color="primary"
                     >
-                      Sign In
+                      {loading ? (
+                        <CircularProgress color="inherit" />
+                      ) : (
+                        "Sign Up"
+                      )}
                     </SubmitButton>
                     <Grid container>
                       <Grid item>
