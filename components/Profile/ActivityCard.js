@@ -22,7 +22,7 @@ const ActivityCard = () => {
           <Typography gutterBottom variant="h5" component="div">
             Write Down
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="textSecondary">
             Write down your thoughts. It will help you to understand your own
             feelings better. You can do it on a diary or use the journal section
             here.

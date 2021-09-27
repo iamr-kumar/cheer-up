@@ -20,7 +20,6 @@ const User = () => {
   };
 
   const handlePress = async () => {
-    const config = { "Content-type": "application/json" };
     setLoading(true);
     try {
       const res = await axios.post("/api/user/analyze-tone", { text }, config);
@@ -66,6 +65,7 @@ const User = () => {
             </InputArea>
           </div>
         </Grid>
+
         <Grid item xs={4}>
           <GridBox>
             <Typography variant="h5">Past Activities</Typography>

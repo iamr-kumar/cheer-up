@@ -15,13 +15,14 @@ import {
 } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-// import { useAuth } from "../context/AuthContext";
+import { loginUser } from "../utils/authUser";
 
 const Login = () => {
   const router = useRouter();
 
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const { email, password } = formState;
 
   const onChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -29,15 +30,15 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formState);
-    // setLoading(true);
-    // try {
-    //   await login(formState.email, formState.password);
-    //   router.push("/user/profile");
-    // } catch (err) {
-    //   console.log(err);
-    //   setLoading(false);
-    // }
+
+    setLoading(true);
+    try {
+      await loginUser({ email, password });
+      router.push("/user/profile");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -94,9 +95,9 @@ const Login = () => {
                       color="primary"
                     >
                       {loading ? (
-                        <CircularProgress color="inherit" />
+                        <CircularProgress color="inherit" size="1.5rem" />
                       ) : (
-                        "Sign In"
+                        "Log in"
                       )}
                     </SubmitButton>
                     <Grid container>

@@ -15,6 +15,7 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { regitserUser } from "../utils/authUser";
 
 const Signup = () => {
   const [formState, setFormState] = useState({
@@ -35,15 +36,14 @@ const Signup = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formState);
-    // setLoading(true);
-    // try {
-    //   await signup(name, email, password, category);
-    //   router.push("/user/profile");
-    // } catch (err) {
-    //   console.log(err);
-    //   setLoading(false);
-    // }
+    setLoading(true);
+    try {
+      await registerUser({ name, email, password, category });
+      router.push("/user/profile");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -121,7 +121,7 @@ const Signup = () => {
                       color="primary"
                     >
                       {loading ? (
-                        <CircularProgress color="inherit" />
+                        <CircularProgress color="inherit" size="1.5em" />
                       ) : (
                         "Sign Up"
                       )}

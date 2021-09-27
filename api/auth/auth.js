@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 // const config = require("config");
 const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
+const UserProfile = require("./../../models/UserProfile");
+const TherapistProfile = require("./../../models/TherapistProfile");
 
 // @route GET api/auth
 // @desc test route
@@ -14,8 +16,14 @@ router.get("/", auth, async (req, res) => {
   try {
     // console.log(req.user.id);
     const user = await User.findById(req.user.id).select("-password");
+    let profile;
+    if (user.category === "user") {
+      profile = await UserProfile.findOne({ user: req.user.id });
+    } else {
+      profile = await TherapistProfile.findOne({ user: req.user.id });
+    }
     // console.log(user);
-    res.json(user);
+    res.json({ user, profile });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -74,6 +82,7 @@ router.post(
           if (err) {
             throw err;
           } else {
+            console.log(token);
             return res.json({ token });
           }
         }
