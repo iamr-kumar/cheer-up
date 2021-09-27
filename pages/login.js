@@ -7,22 +7,18 @@ import {
   Button,
   Avatar,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Typography,
   Container,
-  CssBaseline,
   CircularProgress,
 } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const router = useRouter();
-  const { login } = useAuth();
 
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -33,15 +29,15 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formState);
-    setLoading(true);
-    try {
-      await login(formState.email, formState.password);
-      router.push("/user/profile");
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
-    }
+    // console.log(formState);
+    // setLoading(true);
+    // try {
+    //   await login(formState.email, formState.password);
+    //   router.push("/user/profile");
+    // } catch (err) {
+    //   console.log(err);
+    //   setLoading(false);
+    // }
   };
 
   return (
