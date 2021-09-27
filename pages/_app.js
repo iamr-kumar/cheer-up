@@ -18,9 +18,10 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   const { token } = parseCookies(ctx);
   let pageProps = {};
   const protectedRoutes = ctx.pathname === "/user/profile";
+  const semiProtectedRoutes = ctx.pathname === "/user/create-profile";
   if (!token) {
     destroyCookie(ctx, "token");
-    protectedRoutes && redirectUser(ctx, "/login");
+    (protectedRoutes || semiProtectedRoutes) && redirectUser(ctx, "/login");
   } else {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
@@ -31,13 +32,15 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
       });
       const { user, profile } = res.data;
       if (!profile && user) {
+        pageProps.user = user;
         protectedRoutes && redirectUser(ctx, "/user/create-profile");
       }
 
       if (user && profile) {
-        !protectedRoutes && redirectUser(ctx, "/user/profile");
+        (!protectedRoutes || !semiProtectedRoutes) &&
+          redirectUser(ctx, "/user/profile");
+        pageProps = { user, profile };
       }
-      pageProps = { user, profile };
     } catch (err) {
       console.log(err.message);
       destroyCookie(ctx, "token");

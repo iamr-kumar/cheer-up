@@ -2,7 +2,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import {
   Button,
   Avatar,
@@ -15,11 +15,9 @@ import {
 } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-// import { useAuth } from "../context/AuthContext";
+import { baseUrl } from "../../utils/config";
 
-const createUserProfile = () => {
-  const router = useRouter();
-
+const createUserProfile = ({ user }) => {
   const [formState, setFormState] = useState({
     issues: "",
     medication: "",
@@ -34,15 +32,18 @@ const createUserProfile = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formState);
-    // setLoading(true);
-    // try {
-    //   await login(formState.email, formState.password);
-    //   router.push("/user/profile");
-    // } catch (err) {
-    //   console.log(err);
-    //   setLoading(false);
-    // }
+    setLoading(true);
+    try {
+      const res = await axios.post(`${baseUrl}/api/user`, {
+        ...formState,
+        user: user._id,
+      });
+      console.log(res.status);
+      Router.push("/user/profile");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
 
   return (

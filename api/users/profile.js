@@ -8,6 +8,7 @@ const { check, validationResult } = require("express-validator");
 router.post("/user", async (req, res) => {
   const profileFields = {};
   const { user, medication, issues, city, country } = req.body;
+  console.log(user);
   if (medication) {
     profileFields.medication = medication.split(",").map((med) => med.trim());
   }
@@ -93,3 +94,5 @@ router.get("/therapist/:id", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+module.exports = router;
