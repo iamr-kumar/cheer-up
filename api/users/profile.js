@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const UserProfile = require("../../models/UserProfile");
 const TherapistProfile = require("../../models/TherapistProfile");
+const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
 
 // create user profile
@@ -93,6 +94,21 @@ router.get("/therapist/:id", async (req, res) => {
     } else {
       return res.status(404).json({ msg: "Therapist profile not found" });
     }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Get all therapists
+router.get("/therapists", async (req, res) => {
+  try {
+    const therapists = await TherapistProfile.find({}).populate(
+      "user",
+      "-password"
+    );
+
+    return res.status(200).json(therapists);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Internal Server Error");
