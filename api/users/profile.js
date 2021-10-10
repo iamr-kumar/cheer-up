@@ -8,7 +8,8 @@ const { check, validationResult } = require("express-validator");
 router.post("/user", async (req, res) => {
   const profileFields = {};
   const { user, medication, issues, city, country } = req.body;
-  console.log(user);
+
+  profileFields.user = user;
   if (medication) {
     profileFields.medication = medication.split(",").map((med) => med.trim());
   }
@@ -17,6 +18,7 @@ router.post("/user", async (req, res) => {
   }
   if (city) profileFields.city = city;
   if (country) profileFields.country = country;
+
   try {
     let userProfile = await UserProfile.findOne({ user: user });
     if (userProfile) {
@@ -27,6 +29,7 @@ router.post("/user", async (req, res) => {
       );
       return res.status(200).json(userProfile);
     }
+
     const newUserProfile = new UserProfile(profileFields);
     await newUserProfile.save();
     return res.status(200).json(newUserProfile);

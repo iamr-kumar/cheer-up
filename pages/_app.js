@@ -16,9 +16,11 @@ function MyApp({ Component, pageProps }) {
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
   const { token } = parseCookies(ctx);
+  // console.log(token);
   let pageProps = {};
   const protectedRoutes = ctx.pathname === "/user/profile";
   const semiProtectedRoutes = ctx.pathname === "/user/create-profile";
+  console.log(semiProtectedRoutes, protectedRoutes);
   if (!token) {
     destroyCookie(ctx, "token");
     (protectedRoutes || semiProtectedRoutes) && redirectUser(ctx, "/login");
@@ -31,16 +33,17 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
         headers: { "auth-token": token },
       });
       const { user, profile } = res.data;
-      if (!profile && user) {
-        pageProps.user = user;
-        protectedRoutes && redirectUser(ctx, "/user/create-profile");
-      }
-
-      if (user && profile) {
+      if (!user && !profile)
         (!protectedRoutes || !semiProtectedRoutes) &&
+          redirectUser(ctx, "/login");
+      if (user && !profile)
+        (protectedRoutes || !semiProtectedRoutes) &&
+          redirectUser(ctx, "/user/create-profile");
+      pageProps.user = user;
+      if (user && profile)
+        (semiProtectedRoutes || !protectedRoutes) &&
           redirectUser(ctx, "/user/profile");
-        pageProps = { user, profile };
-      }
+      pageProps.profile = profile;
     } catch (err) {
       console.log(err.message);
       destroyCookie(ctx, "token");

@@ -17,7 +17,7 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { baseUrl } from "../../utils/config";
 
-const createUserProfile = ({ user }) => {
+const CreateUserProfile = ({ user }) => {
   const [formState, setFormState] = useState({
     issues: "",
     medication: "",
@@ -34,11 +34,10 @@ const createUserProfile = ({ user }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(`${baseUrl}/api/user`, {
+      const res = await axios.post(`${baseUrl}/api/profile/user`, {
         ...formState,
         user: user._id,
       });
-      console.log(res.status);
       Router.push("/user/profile");
     } catch (err) {
       console.log(err);
@@ -116,7 +115,7 @@ const createUserProfile = ({ user }) => {
                       color="primary"
                     >
                       {loading ? (
-                        <CircularProgress color="inherit" />
+                        <CircularProgress color="inherit" size="1.5rem" />
                       ) : (
                         "Create Profile"
                       )}
@@ -135,7 +134,7 @@ const createUserProfile = ({ user }) => {
   );
 };
 
-export default createUserProfile;
+export default CreateUserProfile;
 
 const HomepageContainer = styled(Grid)`
   height: 100vh;

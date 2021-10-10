@@ -10,6 +10,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import router from "next/router";
+import Cookies from "js-cookie";
 
 const drawerWidth = 240;
 
@@ -53,6 +54,11 @@ const Navbar = ({ open, handleDrawerOpen }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    router.push("/login");
   };
 
   return (
@@ -104,7 +110,7 @@ const Navbar = ({ open, handleDrawerOpen }) => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </Toolbar>
