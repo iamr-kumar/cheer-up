@@ -43,6 +43,7 @@ router.post("/user", async (req, res) => {
 router.post("/therapist", async (req, res) => {
   const profileFields = {};
   const { user, bio, city, country, mobile } = req.body;
+  profileFields.user = user;
   if (bio) profileFields.bio = bio;
   if (city) profileFields.city = city;
   if (country) profileFields.country = country;

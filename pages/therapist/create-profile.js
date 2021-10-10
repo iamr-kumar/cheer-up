@@ -1,34 +1,29 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import axios from "axios";
+import Router from "next/router";
 import {
   Button,
   Avatar,
   TextField,
-  FormControlLabel,
   Link,
   Grid,
   Typography,
   Container,
-  Radio,
-  RadioGroup,
   CircularProgress,
 } from "@material-ui/core";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { registerUser } from "../utils/authUser";
 
-const Signup = () => {
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { baseUrl } from "../../utils/config";
+
+const CreateUserProfile = ({ user }) => {
   const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    password: "",
-    category: "",
+    bio: "",
+    mobile: "",
+    country: "",
+    city: "",
   });
-  const router = useRouter();
-
-  const { name, email, password, category } = formState;
-
   const [loading, setLoading] = useState(false);
 
   const onChange = (e) => {
@@ -39,9 +34,11 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await registerUser({ name, email, password, category });
-      category === "user" && router.push("/user/create-profile");
-      category === "therapist" && router.push("/therapist/create-profile");
+      await axios.post(`${baseUrl}/api/profile/therapist`, {
+        ...formState,
+        user: user._id,
+      });
+      Router.push("/therapist/profile");
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -51,7 +48,7 @@ const Signup = () => {
   return (
     <>
       <Head>
-        <title>Signup</title>
+        <title>Create Therapist Profile</title>
       </Head>
       <HomepageContainer container>
         <Grid container item lg={6} md={12}>
@@ -61,61 +58,58 @@ const Signup = () => {
               <Container maxWidth="xs">
                 <FormContainer>
                   <UserAvatar>
-                    <AccountCircleIcon />
+                    <LockOutlinedIcon />
                   </UserAvatar>
                   <Typography component="h1" variant="h5">
-                    Sign Up
+                    Create Therapist Profile
                   </Typography>
                   <SignupForm onSubmit={onSubmit}>
                     <TextField
                       variant="outlined"
                       margin="normal"
-                      required
                       fullWidth
-                      id="name"
-                      label="Full Name"
-                      name="name"
+                      id="bio"
+                      label="Bio"
+                      name="bio"
+                      placeholder="Tell us abit about yourself"
+                      onChange={onChange}
+                      rows={4}
+                      multiline
+                    />
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      name="mobile"
+                      label="Mobile Number"
+                      type="number"
+                      id="mobile"
+                      placeholder="Don't worry, this will not be public"
                       onChange={onChange}
                     />
                     <TextField
                       variant="outlined"
                       margin="normal"
-                      required
                       fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
+                      required
+                      name="country"
+                      label="Country"
+                      type="text"
+                      id="country"
                       onChange={onChange}
                     />
                     <TextField
                       variant="outlined"
                       margin="normal"
-                      required
                       fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
+                      required
+                      name="city"
+                      label="City"
+                      type="text"
+                      id="city"
                       onChange={onChange}
                     />
-                    <RadioGroup
-                      aria-label="category"
-                      name="category"
-                      onChange={onChange}
-                    >
-                      <FormControlLabel
-                        value="user"
-                        control={<StyledRadio color="primary" />}
-                        label="User"
-                      />
-                      <FormControlLabel
-                        value="therapist"
-                        control={<StyledRadio color="primary" />}
-                        label="Therapist"
-                      />
-                    </RadioGroup>
+
                     <SubmitButton
                       type="submit"
                       fullWidth
@@ -123,18 +117,11 @@ const Signup = () => {
                       color="primary"
                     >
                       {loading ? (
-                        <CircularProgress color="inherit" size="1.5em" />
+                        <CircularProgress color="inherit" size="1.5rem" />
                       ) : (
-                        "Sign Up"
+                        "Create Profile"
                       )}
                     </SubmitButton>
-                    <Grid container>
-                      <Grid item>
-                        <FormLink href="/login" variant="body2">
-                          {"Already have an accoubt? Login"}
-                        </FormLink>
-                      </Grid>
-                    </Grid>
                   </SignupForm>
                 </FormContainer>
               </Container>
@@ -142,14 +129,14 @@ const Signup = () => {
           </InfoContainer>
         </Grid>
         <Grid container item lg={6} md={12}>
-          <ImageContainer src="./vector-image.jpg" />
+          <ImageContainer src="./../vector-image.jpg" />
         </Grid>
       </HomepageContainer>
     </>
   );
 };
 
-export default Signup;
+export default CreateUserProfile;
 
 const HomepageContainer = styled(Grid)`
   height: 100vh;
@@ -216,5 +203,3 @@ const FormLink = styled(Link)`
     color: rgb(27, 46, 53);
   }
 `;
-
-const StyledRadio = styled(Radio)``;

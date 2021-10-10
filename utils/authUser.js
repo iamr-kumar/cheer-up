@@ -2,7 +2,7 @@ import axios from "axios";
 import Router from "next/router";
 import cookie from "js-cookie";
 
-export const regitserUser = async (user) => {
+export const registerUser = async (user) => {
   try {
     const res = await axios.post("/api/signup", user);
     setToken(res.data);
