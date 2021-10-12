@@ -13,9 +13,10 @@ import {
   Container,
   Radio,
   RadioGroup,
+  CircularProgress,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { regitserUser } from "../utils/authUser";
+import { registerUser } from "../utils/authUser";
 
 const Signup = () => {
   const [formState, setFormState] = useState({
@@ -39,7 +40,8 @@ const Signup = () => {
     setLoading(true);
     try {
       await registerUser({ name, email, password, category });
-      router.push("/user/profile");
+      category === "user" && router.push("/user/create-profile");
+      category === "therapist" && router.push("/therapist/create-profile");
     } catch (err) {
       console.log(err);
       setLoading(false);

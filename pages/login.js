@@ -33,7 +33,8 @@ const Login = () => {
 
     setLoading(true);
     try {
-      await loginUser({ email, password });
+      const res = await loginUser({ email, password });
+
       router.push("/user/profile");
     } catch (err) {
       console.log(err);

@@ -19,8 +19,8 @@ import { baseUrl } from "../../utils/config";
 
 const CreateUserProfile = ({ user }) => {
   const [formState, setFormState] = useState({
-    issues: "",
-    medication: "",
+    bio: "",
+    mobile: "",
     country: "",
     city: "",
   });
@@ -34,11 +34,11 @@ const CreateUserProfile = ({ user }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(`${baseUrl}/api/profile/user`, {
+      await axios.post(`${baseUrl}/api/profile/therapist`, {
         ...formState,
         user: user._id,
       });
-      Router.push("/user/profile");
+      Router.push("/therapist/profile");
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -48,7 +48,7 @@ const CreateUserProfile = ({ user }) => {
   return (
     <>
       <Head>
-        <title>Create Profile</title>
+        <title>Create Therapist Profile</title>
       </Head>
       <HomepageContainer container>
         <Grid container item lg={6} md={12}>
@@ -61,28 +61,30 @@ const CreateUserProfile = ({ user }) => {
                     <LockOutlinedIcon />
                   </UserAvatar>
                   <Typography component="h1" variant="h5">
-                    Create Profile
+                    Create Therapist Profile
                   </Typography>
                   <SignupForm onSubmit={onSubmit}>
                     <TextField
                       variant="outlined"
                       margin="normal"
                       fullWidth
-                      id="issues"
-                      label="What issues are you facing?"
-                      name="issues"
-                      placeholder="Separate your input using ,"
+                      id="bio"
+                      label="Bio"
+                      name="bio"
+                      placeholder="Tell us abit about yourself"
                       onChange={onChange}
+                      rows={4}
+                      multiline
                     />
                     <TextField
                       variant="outlined"
                       margin="normal"
                       fullWidth
-                      name="medication"
-                      label="What medication are you on, if any?"
-                      type="text"
-                      id="medication"
-                      placeholder="Separate your input using ,"
+                      name="mobile"
+                      label="Mobile Number"
+                      type="number"
+                      id="mobile"
+                      placeholder="Don't worry, this will not be public"
                       onChange={onChange}
                     />
                     <TextField

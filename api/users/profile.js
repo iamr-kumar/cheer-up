@@ -2,13 +2,15 @@ const express = require("express");
 const router = express.Router();
 const UserProfile = require("../../models/UserProfile");
 const TherapistProfile = require("../../models/TherapistProfile");
+const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
 
 // create user profile
 router.post("/user", async (req, res) => {
   const profileFields = {};
   const { user, medication, issues, city, country } = req.body;
-  console.log(user);
+
+  profileFields.user = user;
   if (medication) {
     profileFields.medication = medication.split(",").map((med) => med.trim());
   }
@@ -17,6 +19,7 @@ router.post("/user", async (req, res) => {
   }
   if (city) profileFields.city = city;
   if (country) profileFields.country = country;
+
   try {
     let userProfile = await UserProfile.findOne({ user: user });
     if (userProfile) {
@@ -27,6 +30,7 @@ router.post("/user", async (req, res) => {
       );
       return res.status(200).json(userProfile);
     }
+
     const newUserProfile = new UserProfile(profileFields);
     await newUserProfile.save();
     return res.status(200).json(newUserProfile);
@@ -40,6 +44,7 @@ router.post("/user", async (req, res) => {
 router.post("/therapist", async (req, res) => {
   const profileFields = {};
   const { user, bio, city, country, mobile } = req.body;
+  profileFields.user = user;
   if (bio) profileFields.bio = bio;
   if (city) profileFields.city = city;
   if (country) profileFields.country = country;
@@ -89,6 +94,21 @@ router.get("/therapist/:id", async (req, res) => {
     } else {
       return res.status(404).json({ msg: "Therapist profile not found" });
     }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Get all therapists
+router.get("/therapists", async (req, res) => {
+  try {
+    const therapists = await TherapistProfile.find({}).populate(
+      "user",
+      "-password"
+    );
+
+    return res.status(200).json(therapists);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Internal Server Error");
