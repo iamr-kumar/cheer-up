@@ -129,7 +129,7 @@ const Signup = () => {
                     <Grid container>
                       <Grid item>
                         <FormLink href="/login" variant="body2">
-                          {"Already have an accoubt? Login"}
+                          {"Already have an account? Login"}
                         </FormLink>
                       </Grid>
                     </Grid>

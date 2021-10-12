@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>HowYouDoin'?</title>
+        <title>CheerUp</title>
       </Head>
       <Homepage />
     </>

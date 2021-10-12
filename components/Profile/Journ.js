@@ -7,60 +7,29 @@ import {
   Button,
   CircularProgress,
 } from "@material-ui/core";
-import ActivityCard from "./ActivityCard";
+import ChooseActivity from "./ChooseActivity";
 import { Scrollbars } from "react-custom-scrollbars";
-import axios from "axios";
-
-const User = () => {
-  const [text, setText] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (event) => {
-    setText(event.target.value);
-  };
-
-  const handlePress = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.post("/api/user/analyze-tone", { text }, config);
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-    setLoading(false);
-  };
-
+import Link from "next/link";
+const Journ = () => {
   return (
     <Section>
       <Grid container spacing={6} justifyContent="center" className="cont">
         <Grid item xs={12} lg={6} sm={12}>
           <div>
             <div>
-              <Typography variant="h4">Hello, Ritik</Typography>
-              <Typography variant="h5">How do you feel today?</Typography>
+              <Typography variant="h4">Hey Ritik</Typography>
+              <Typography variant="h6">
+                Go on! Write your stories or journals.
+              </Typography>
             </div>
             <InputArea>
-              <Typography variant="subtitle1" color="textSecondary">
-                Say what's in your mind and find things to do to make you feel
-                better
-              </Typography>
-              <TextArea
-                rows="12"
-                cols="50"
-                name="text"
-                onChange={handleChange}
-              ></TextArea>
-              <SubmitButton
-                type="submit"
-                variant="contained"
-                color="primary"
-                onClick={handlePress}
-              >
-                {loading ? (
+              <TextArea rows="12" cols="50" name="text"></TextArea>
+              <SubmitButton type="submit" variant="contained" color="primary">
+                {/* {loading ? (
                   <CircularProgress color="inherit" size={25} />
-                ) : (
-                  "Submit"
-                )}
+                ) : ( */}
+                "Submit"
+                {/* )} */}
               </SubmitButton>
             </InputArea>
           </div>
@@ -68,7 +37,7 @@ const User = () => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
-            <Typography variant="h5">Past Activities</Typography>
+            <Typography variant="h5">Your Journals</Typography>
             <Scrollbars
               style={{ height: 650 }}
               universal={true}
@@ -76,10 +45,18 @@ const User = () => {
               autoHideTimeout={1000}
               autoHideDuration={200}
             >
-              <ActivityCard />
-              <ActivityCard />
-              <ActivityCard />
-              <ActivityCard />
+              <Link href="">
+                <ChooseActivity btnText="See more" />
+              </Link>
+              <Link href="">
+                <ChooseActivity btnText="See more" />
+              </Link>
+              <Link href="">
+                <ChooseActivity btnText="See more" />
+              </Link>
+              <Link href="">
+                <ChooseActivity btnText="See more" />
+              </Link>
             </Scrollbars>
           </GridBox>
         </Grid>
@@ -88,7 +65,7 @@ const User = () => {
   );
 };
 
-export default User;
+export default Journ;
 
 const InputArea = styled.div`
   margin-top: 1.5rem;

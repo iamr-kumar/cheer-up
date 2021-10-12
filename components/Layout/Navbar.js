@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   appBar: {
-    backgroudn: "rgb(0, 125, 254)",
+    background: "rgb(0, 125, 254)",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -76,7 +76,7 @@ const Navbar = ({ open, handleDrawerOpen }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap style={{ flexGrow: 1 }}>
-          HowYouDoin'?
+          CheerUp
         </Typography>
         <div>
           <IconButton

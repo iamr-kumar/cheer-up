@@ -14,7 +14,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import TimelineIcon from "@material-ui/icons/Timeline";
 import CreateIcon from "@material-ui/icons/Create";
 import PeopleIcon from "@material-ui/icons/People";
-
+import Link from "next/link";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -83,30 +83,38 @@ const Sidebar = ({ open, handleDrawerClose }) => {
       </div>
       <Divider />
       <List>
-        <ListItem button>
-          <ListItemIcon>
-            <AccountCircle />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <TimelineIcon />
-          </ListItemIcon>
-          <ListItemText primary="Activities" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <CreateIcon />
-          </ListItemIcon>
-          <ListItemText primary="Journal" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <PeopleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Therapist" />
-        </ListItem>
+        <Link href="/user/profile" passHref>
+          <ListItem button component="a">
+            <ListItemIcon>
+              <AccountCircle />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
+        </Link>
+        <Link href="/user/activities" passHref>
+          <ListItem button component="a">
+            <ListItemIcon>
+              <TimelineIcon />
+            </ListItemIcon>
+            <ListItemText primary="Activities" />
+          </ListItem>
+        </Link>
+        <Link href="/user/journal" passHref>
+          <ListItem button>
+            <ListItemIcon>
+              <CreateIcon />
+            </ListItemIcon>
+            <ListItemText primary="Journal" />
+          </ListItem>
+        </Link>
+        <Link href="/user/therapist" passHref>
+          <ListItem button>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Therapist" />
+          </ListItem>
+        </Link>
       </List>
     </Drawer>
   );

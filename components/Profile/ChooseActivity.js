@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import styled from "styled-components";
 
-const ActivityCard = () => {
+const ChooseActivity = ({ btnText }) => {
   return (
     <CustomCard sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -19,24 +19,40 @@ const ActivityCard = () => {
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Write Down
-          </Typography>
+          <Banner>
+            <Typography gutterBottom variant="h5" component="div">
+              Write Down
+            </Typography>
+          </Banner>
           <Typography variant="body2" color="textSecondary">
             Write down your thoughts. It will help you to understand your own
             feelings better. You can do it on a diary or use the journal section
             here.
           </Typography>
         </CardContent>
+        <SelectButton variant="contained" color="primary">
+          {btnText}
+        </SelectButton>
       </CardActionArea>
     </CustomCard>
   );
 };
 
-export default ActivityCard;
+export default ChooseActivity;
 
 const CustomCard = styled(Card)`
   margin: 1rem;
   margin-left: 0.5rem;
   margin-right: 1rem;
+  padding: 1rem;
+`;
+
+const Banner = styled.div`
+  margin-bottom: 1rem;
+`;
+const SelectButton = styled(Button)`
+  &&& {
+    background: rgb(0, 125, 254);
+    float: right;
+  }
 `;
