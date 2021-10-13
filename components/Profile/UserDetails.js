@@ -19,7 +19,7 @@ const UserDetails = () => {
               component="img"
               image="https://shtheme.com/demosd/medifine/wp-content/uploads/2017/07/doctor-single-2.jpg"
               alt="green iguana"
-              maxWidth="300"
+              maxwidth="300"
             />
             <SelectButton variant="contained" color="primary">
               {" "}

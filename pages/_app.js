@@ -46,7 +46,7 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
           !therapistSemiProtectedRoutes) &&
           redirectUser(ctx, "/login");
 
-      if (user.type === "user") {
+      if (user.category === "user") {
         if (user && !profile)
           (userProtectedRoutes || !userSemiProtectedRoutes) &&
             redirectUser(ctx, "/user/create-profile");
