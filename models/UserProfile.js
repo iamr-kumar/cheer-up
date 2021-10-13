@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const UserProfileSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "User",
     required: true,
   },
   medication: {
@@ -20,7 +20,7 @@ const UserProfileSchema = new mongoose.Schema({
   },
   therapist: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "User",
   },
 });
 
