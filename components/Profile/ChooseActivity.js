@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import styled from "styled-components";
 
+//Each card in activity shown after depicting mood
 const ChooseActivity = ({ btnText }) => {
   return (
     <CustomCard sx={{ maxWidth: 345 }}>
@@ -52,7 +53,10 @@ const Banner = styled.div`
 `;
 const SelectButton = styled(Button)`
   &&& {
-    background: rgb(0, 125, 254);
-    float: right;
+      background: rgb(0, 125, 254);
+      float:right;
+    }
+  &&&:hover{
+    box-shadow: 3px 3px #C5C6D0;
   }
 `;

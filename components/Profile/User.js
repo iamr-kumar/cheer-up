@@ -7,10 +7,11 @@ import {
   Button,
   CircularProgress,
 } from "@material-ui/core";
-import ActivityCard from "./ActivityCard";
 import { Scrollbars } from "react-custom-scrollbars";
 import axios from "axios";
+import ActivityList from "./ActivityList";
 
+//Landing screen of patient
 const User = () => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -68,19 +69,7 @@ const User = () => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
-            <Typography variant="h5">Past Activities</Typography>
-            <Scrollbars
-              style={{ height: 650 }}
-              universal={true}
-              autoHide
-              autoHideTimeout={1000}
-              autoHideDuration={200}
-            >
-              <ActivityCard />
-              <ActivityCard />
-              <ActivityCard />
-              <ActivityCard />
-            </Scrollbars>
+            <ActivityList/>
           </GridBox>
         </Grid>
       </Grid>
@@ -121,15 +110,18 @@ const GridBox = styled(Box)`
 
 const SubmitButton = styled(Button)`
   &&& {
-    position: absolute;
-    bottom: -40px;
-    left: 2px;
-    background: rgb(0, 125, 254);
-    font-size: 16px;
-    color: #fff;
-    border: 0;
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
+      position: absolute;
+      bottom: -40px;
+      left: 2px;
+      background: rgb(0, 125, 254);
+      font-size: 16px;
+      color: #fff;
+      border: 0;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  &&&:hover{
+    box-shadow: 3px 3px #C5C6D0;
   }
 `;

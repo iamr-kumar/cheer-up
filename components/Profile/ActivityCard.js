@@ -7,7 +7,7 @@ import {
   Button,
 } from "@material-ui/core";
 import styled from "styled-components";
-
+//Individual activity card in activity list
 const ActivityCard = () => {
   return (
     <CustomCard sx={{ maxWidth: 345 }}>
@@ -26,6 +26,9 @@ const ActivityCard = () => {
             Write down your thoughts. It will help you to understand your own
             feelings better. You can do it on a diary or use the journal section
             here.
+          </Typography>
+          <Typography variant="body2" style={{marginTop:4}}>
+            Done on : 30/10/2021
           </Typography>
         </CardContent>
       </CardActionArea>

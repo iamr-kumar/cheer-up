@@ -7,9 +7,11 @@ import {
   Button,
   CircularProgress,
 } from "@material-ui/core";
-import ChooseActivity from "./ChooseActivity";
+import JournalList from "./JournalList";
 import { Scrollbars } from "react-custom-scrollbars";
 import Link from "next/link";
+
+//journal writing page
 const Journ = () => {
   return (
     <Section>
@@ -37,27 +39,7 @@ const Journ = () => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
-            <Typography variant="h5">Your Journals</Typography>
-            <Scrollbars
-              style={{ height: 650 }}
-              universal={true}
-              autoHide
-              autoHideTimeout={1000}
-              autoHideDuration={200}
-            >
-              <Link href="">
-                <ChooseActivity btnText="See more" />
-              </Link>
-              <Link href="">
-                <ChooseActivity btnText="See more" />
-              </Link>
-              <Link href="">
-                <ChooseActivity btnText="See more" />
-              </Link>
-              <Link href="">
-                <ChooseActivity btnText="See more" />
-              </Link>
-            </Scrollbars>
+            <JournalList/>
           </GridBox>
         </Grid>
       </Grid>

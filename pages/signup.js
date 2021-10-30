@@ -36,6 +36,7 @@ const Signup = () => {
   };
 
   const onSubmit = async (e) => {
+    console.log("called");
     e.preventDefault();
     setLoading(true);
     try {
@@ -43,7 +44,7 @@ const Signup = () => {
       category === "user" && router.push("/user/create-profile");
       category === "therapist" && router.push("/therapist/create-profile");
     } catch (err) {
-      console.log(err);
+      console.log(err.errors);
       setLoading(false);
     }
   };
