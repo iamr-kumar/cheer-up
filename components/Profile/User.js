@@ -7,9 +7,8 @@ import {
   Button,
   CircularProgress,
 } from "@material-ui/core";
-import { Scrollbars } from "react-custom-scrollbars";
-import axios from "axios";
 import ActivityList from "./ActivityList";
+import Router from "next/router";
 
 //Landing screen of patient
 const User = () => {
@@ -22,12 +21,7 @@ const User = () => {
 
   const handlePress = async () => {
     setLoading(true);
-    try {
-      const res = await axios.post("/api/user/analyze-tone", { text }, config);
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
+    Router.push({ pathname: "/user/activities", query: { text } });
     setLoading(false);
   };
 
@@ -69,7 +63,7 @@ const User = () => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
-            <ActivityList/>
+            <ActivityList />
           </GridBox>
         </Grid>
       </Grid>
@@ -110,18 +104,18 @@ const GridBox = styled(Box)`
 
 const SubmitButton = styled(Button)`
   &&& {
-      position: absolute;
-      bottom: -40px;
-      left: 2px;
-      background: rgb(0, 125, 254);
-      font-size: 16px;
-      color: #fff;
-      border: 0;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-  &&&:hover{
-    box-shadow: 3px 3px #C5C6D0;
+    position: absolute;
+    bottom: -40px;
+    left: 2px;
+    background: rgb(0, 125, 254);
+    font-size: 16px;
+    color: #fff;
+    border: 0;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  &&&:hover {
+    box-shadow: 3px 3px #c5c6d0;
   }
 `;

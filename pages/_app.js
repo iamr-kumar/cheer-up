@@ -17,7 +17,8 @@ function MyApp({ Component, pageProps }) {
 MyApp.getInitialProps = async ({ Component, ctx }) => {
   const { token } = parseCookies(ctx);
   let pageProps = {};
-  const userProtectedRoutes = ctx.pathname === "/user/profile";
+  const userProtectedRoutes =
+    ctx.pathname === "/user/profile" || ctx.pathname === "/user/activities";
   const userSemiProtectedRoutes = ctx.pathname === "/user/create-profile";
   const therapistProtectedRoutes = ctx.pathname === "/therapist/profile";
   const therapistSemiProtectedRoutes =

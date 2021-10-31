@@ -9,7 +9,7 @@ import {
 import styled from "styled-components";
 
 //Each card in activity shown after depicting mood
-const ChooseActivity = ({ btnText }) => {
+const ChooseActivity = ({ btnText, activity }) => {
   return (
     <CustomCard sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -22,13 +22,11 @@ const ChooseActivity = ({ btnText }) => {
         <CardContent>
           <Banner>
             <Typography gutterBottom variant="h5" component="div">
-              Write Down
+              {activity.name}
             </Typography>
           </Banner>
           <Typography variant="body2" color="textSecondary">
-            Write down your thoughts. It will help you to understand your own
-            feelings better. You can do it on a diary or use the journal section
-            here.
+            {activity.description}
           </Typography>
         </CardContent>
         <SelectButton variant="contained" color="primary">
@@ -53,10 +51,10 @@ const Banner = styled.div`
 `;
 const SelectButton = styled(Button)`
   &&& {
-      background: rgb(0, 125, 254);
-      float:right;
-    }
-  &&&:hover{
-    box-shadow: 3px 3px #C5C6D0;
+    background: rgb(0, 125, 254);
+    float: right;
+  }
+  &&&:hover {
+    box-shadow: 3px 3px #c5c6d0;
   }
 `;
