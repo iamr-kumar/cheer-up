@@ -6,16 +6,14 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { baseUrl } from "../../utils/config";
-const Activities = (props) => {
-  const { activities, tones, err } = props;
-  console.log(activities);
+const Activities = ({ activities, tones, err, user }) => {
   return (
     <>
       <Head>
         <title>Activities</title>
       </Head>
 
-      <Layout>
+      <Layout user={user}>
         <Heading>
           <Typography gutterBottom variant="h4" component="div" align="center">
             State Detected on the basis of analysis :{" "}

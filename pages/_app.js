@@ -18,9 +18,15 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   const { token } = parseCookies(ctx);
   let pageProps = {};
   const userProtectedRoutes =
-    ctx.pathname === "/user/profile" || ctx.pathname === "/user/activities";
+    ctx.pathname === "/user/profile" ||
+    ctx.pathname === "/user/activities" ||
+    ctx.pathname === "/user/dashboard" ||
+    ctx.pathname === "/user/journal";
   const userSemiProtectedRoutes = ctx.pathname === "/user/create-profile";
-  const therapistProtectedRoutes = ctx.pathname === "/therapist/profile";
+  const therapistProtectedRoutes =
+    ctx.pathname === "/therapist/profile" ||
+    ctx.pathname === "/therapist/patient-info" ||
+    ctx.pathname === "/therapist/dashboard";
   const therapistSemiProtectedRoutes =
     ctx.pathname === "/therapist/create-profile";
   console.log(userSemiProtectedRoutes, userProtectedRoutes);

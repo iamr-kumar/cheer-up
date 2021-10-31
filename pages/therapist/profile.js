@@ -1,13 +1,16 @@
 import Layout from "../../components/Layout/Layout";
 import Head from "next/dist/next-server/lib/head";
-import PatientList from "./patient-list";
-const TherapistProfile = () => {
+import PatientList from "../../components/Therapist/PatientList";
+
+const TherapistProfile = ({ user }) => {
   return (
     <>
       <Head>
         <title>Profile</title>
       </Head>
-      <PatientList/>
+      <Layout user={user}>
+        <PatientList />
+      </Layout>
     </>
   );
 };
