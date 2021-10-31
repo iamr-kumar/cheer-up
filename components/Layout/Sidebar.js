@@ -15,6 +15,7 @@ import TimelineIcon from "@material-ui/icons/Timeline";
 import CreateIcon from "@material-ui/icons/Create";
 import PeopleIcon from "@material-ui/icons/People";
 import Link from "next/link";
+import { AddCircle } from "@material-ui/icons";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sidebar = ({ open, handleDrawerClose }) => {
+const Sidebar = ({ open, handleDrawerClose, user }) => {
   const theme = useTheme();
   const classes = useStyles();
   return (
@@ -83,7 +84,12 @@ const Sidebar = ({ open, handleDrawerClose }) => {
       </div>
       <Divider />
       <List>
-        <Link href="/user/profile" passHref>
+        <Link
+          href={
+            user.category === "user" ? "/user/profile" : "/therapist/profile"
+          }
+          passHref
+        >
           <ListItem button component="a">
             <ListItemIcon>
               <AccountCircle />
@@ -91,28 +97,50 @@ const Sidebar = ({ open, handleDrawerClose }) => {
             <ListItemText primary="Profile" />
           </ListItem>
         </Link>
-        <Link href="/user/activities" passHref>
-          <ListItem button component="a">
-            <ListItemIcon>
-              <TimelineIcon />
-            </ListItemIcon>
-            <ListItemText primary="Activities" />
-          </ListItem>
-        </Link>
-        <Link href="/user/journal" passHref>
-          <ListItem button>
-            <ListItemIcon>
-              <CreateIcon />
-            </ListItemIcon>
-            <ListItemText primary="Journal" />
-          </ListItem>
-        </Link>
-        <Link href="/user/therapist" passHref>
+        {user.category === "user" && (
+          <Link href="/user/activities" passHref>
+            <ListItem button component="a">
+              <ListItemIcon>
+                <TimelineIcon />
+              </ListItemIcon>
+              <ListItemText primary="Activities" />
+            </ListItem>
+          </Link>
+        )}
+
+        {user.category === "user" && (
+          <Link href="/user/journal" passHref>
+            <ListItem button>
+              <ListItemIcon>
+                <CreateIcon />
+              </ListItemIcon>
+              <ListItemText primary="Journal" />
+            </ListItem>
+          </Link>
+        )}
+        {user.category === "therapist" && (
+          <Link href="/therapist/requests" passHref>
+            <ListItem button>
+              <ListItemIcon>
+                <AddCircle />
+              </ListItemIcon>
+              <ListItemText primary="Requests" />
+            </ListItem>
+          </Link>
+        )}
+        <Link
+          href={
+            user.category === "user" ? "/user/therapist" : "/therpist/clients"
+          }
+          passHref
+        >
           <ListItem button>
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary="Therapist" />
+            <ListItemText
+              primary={user.category === "user" ? "Therapist" : "Clients"}
+            />
           </ListItem>
         </Link>
       </List>

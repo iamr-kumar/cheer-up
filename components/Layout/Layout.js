@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, user }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleDrawerClose = () => {
@@ -17,7 +17,11 @@ const Layout = ({ children }) => {
   return (
     <Container>
       <Navbar open={sidebarOpen} handleDrawerOpen={handleDrawerOpen} />
-      <Sidebar open={sidebarOpen} handleDrawerClose={handleDrawerClose} />
+      <Sidebar
+        open={sidebarOpen}
+        handleDrawerClose={handleDrawerClose}
+        user={user}
+      />
       <Main>{children}</Main>
     </Container>
   );
