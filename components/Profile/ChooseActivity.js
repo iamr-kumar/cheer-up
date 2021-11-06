@@ -9,7 +9,7 @@ import {
 import styled from "styled-components";
 
 //Each card in activity shown after depicting mood
-const ChooseActivity = ({ btnText, activity }) => {
+const ChooseActivity = ({ btnText, activity, handleOpen }) => {
   return (
     <CustomCard sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -29,7 +29,11 @@ const ChooseActivity = ({ btnText, activity }) => {
             {activity.description}
           </Typography>
         </CardContent>
-        <SelectButton variant="contained" color="primary">
+        <SelectButton
+          variant="contained"
+          color="primary"
+          onClick={() => handleOpen(activity)}
+        >
           {btnText}
         </SelectButton>
       </CardActionArea>

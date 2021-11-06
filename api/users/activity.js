@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const Activity = require("../../models/Activity");
-
+const auth = require("../../middleware/auth");
 const analyzeTone = require("../../config/watson");
+const MoodHistory = require("../../models/MoodHistory");
 
-router.post("/analyze-tone", async (req, res) => {
+router.post("/analyze-tone", auth, async (req, res) => {
   try {
     const text = req.body.text;
+    const user = req.user;
+    console.log(user);
     const tone = await analyzeTone(text);
     const { document_tone: moods } = tone;
     const activities = [];
@@ -18,6 +21,12 @@ router.post("/analyze-tone", async (req, res) => {
       });
       forThisTone && activities.push(forThisTone);
     }
+    // const moodHistory = new MoodHistory({
+    //   userId: user.id,
+    //   text,
+    //   moods: tones,
+    // });
+    // const newMoodHistory = await moodHistory.save();
     res.json({ activities, tones });
   } catch (err) {
     console.log(err);

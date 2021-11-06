@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Moods } = require("../api/utils/common");
 
 const ActivitySchema = new mongoose.Schema({
   name: {
@@ -16,6 +17,7 @@ const ActivitySchema = new mongoose.Schema({
   moods: {
     type: [String],
     required: true,
+    enum: Moods,
   },
 });
 

@@ -1,12 +1,24 @@
+import React from "react";
 import Layout from "../../components/Layout/Layout";
 import ChooseActivity from "../../components/Profile/ChooseActivity";
 import { Grid, Typography } from "@material-ui/core";
 import Head from "next/head";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import axios from "axios";
 import { baseUrl } from "../../utils/config";
+import { parseCookies } from "nookies";
+import ActivityDetail from "../../components/Profile/ActivityDetail";
+
 const Activities = ({ activities, tones, err, user }) => {
+  const [open, setOpen] = React.useState(false);
+  const [currActivity, setCurrActivity] = React.useState(null);
+
+  const handleToggle = (activity) => {
+    setOpen(!open);
+    if (currActivity === null) setCurrActivity(activity);
+    else setCurrActivity(null);
+  };
+
   return (
     <>
       <Head>
@@ -26,11 +38,21 @@ const Activities = ({ activities, tones, err, user }) => {
         </Heading>
         <Grid container spacing={3}>
           {activities.map((activity) => (
-            <Grid item xs={4}>
-              <ChooseActivity activity={activity} btnText="Select" />
+            <Grid item xs={6} md={4}>
+              <ChooseActivity
+                activity={activity}
+                btnText="Details"
+                handleOpen={handleToggle}
+              />
             </Grid>
           ))}
         </Grid>
+
+        <ActivityDetail
+          handleClose={handleToggle}
+          open={open}
+          activity={currActivity}
+        />
       </Layout>
     </>
   );
@@ -48,8 +70,17 @@ const Field = styled.span`
 
 export async function getServerSideProps(context) {
   const { text } = context.query;
+  const { token } = parseCookies(context);
   try {
-    const res = await axios.post(`${baseUrl}/api/user/analyze-tone`, { text });
+    const res = await axios.post(
+      `${baseUrl}/api/user/analyze-tone`,
+      { text },
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
     return {
       props: {
         activities: res.data.activities,
