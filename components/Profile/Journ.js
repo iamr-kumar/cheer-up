@@ -16,7 +16,7 @@ const Journ = () => {
   return (
     <Section>
       <Grid container spacing={6} justifyContent="center" className="cont">
-        <Grid item xs={12} lg={6} sm={12}>
+        <Grid item xs={12} lg={8}>
           <div>
             <div>
               <Typography variant="h4">Hey Ritik</Typography>
@@ -25,21 +25,21 @@ const Journ = () => {
               </Typography>
             </div>
             <InputArea>
-              <TextArea rows="12" cols="50" name="text"></TextArea>
+              <TextArea rows="12" cols="70" name="text"></TextArea>
               <SubmitButton type="submit" variant="contained" color="primary">
                 {/* {loading ? (
                   <CircularProgress color="inherit" size={25} />
                 ) : ( */}
-                "Submit"
+                Submit
                 {/* )} */}
               </SubmitButton>
             </InputArea>
           </div>
         </Grid>
 
-        <Grid item xs={12} lg={5} sm={12}>
+        <Grid item xs={8} lg={4}>
           <GridBox>
-            <JournalList/>
+            <JournalList />
           </GridBox>
         </Grid>
       </Grid>
