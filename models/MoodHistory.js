@@ -20,10 +20,12 @@ const MoodHistorySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  activities: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "Activity",
-  },
+  activities: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "activities",
+    },
+  ],
 });
 
 const MoodHistory = mongoose.model("MoodHistory", MoodHistorySchema);

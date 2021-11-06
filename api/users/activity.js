@@ -45,4 +45,27 @@ router.patch("/mood-history/:id", auth, async (req, res) => {
   }
 });
 
+router.get("/activities", auth, async (req, res) => {
+  try {
+    const moodHistory = await MoodHistory.find({
+      userId: req.user.id,
+    })
+      .populate("activities")
+      .sort({ date: -1 });
+    const activityHistory = moodHistory.map((mood) => {
+      return mood.activities.map((activity) => {
+        return {
+          moods: mood.moods,
+          activity,
+          date: mood.date,
+        };
+      });
+    });
+    res.json({ activityHistory });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

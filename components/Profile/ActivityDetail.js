@@ -99,7 +99,7 @@ const ActivityDetail = (props) => {
                 Select
               </Button>
             </TitleContainer>
-            <ActivityDescription>{activity.description}</ActivityDescription>
+            <ActivityDescription>{activity.detail}</ActivityDescription>
           </div>
         </Container>
         <Backdrop open={loading} className={classes.backdrop}>

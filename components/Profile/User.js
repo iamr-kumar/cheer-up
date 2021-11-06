@@ -11,9 +11,10 @@ import ActivityList from "./ActivityList";
 import Router from "next/router";
 
 //Landing screen of patient
-const User = () => {
+const User = ({ history }) => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
+  console.log(history);
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -27,7 +28,7 @@ const User = () => {
 
   return (
     <Section>
-      <Grid container spacing={6} justifyContent="center" className="cont">
+      <Grid container spacing={6} className="cont">
         <Grid item xs={12} lg={6} sm={12}>
           <div>
             <div>
@@ -63,7 +64,7 @@ const User = () => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
-            <ActivityList />
+            <ActivityList list={history} />
           </GridBox>
         </Grid>
       </Grid>

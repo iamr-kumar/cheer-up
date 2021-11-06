@@ -10,6 +10,10 @@ const ActivitySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  detail: {
+    type: String,
+    required: true,
+  },
   imageUrl: {
     type: String,
     required: true,

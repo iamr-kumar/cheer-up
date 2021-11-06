@@ -12,10 +12,16 @@ router.get("/all", async (req, res) => {
 });
 
 router.post("/new-activity", async (req, res) => {
-  const { name, description, imageUrl } = req.body;
+  const { name, description, imageUrl, detail } = req.body;
   const moods = req.body.moods.split(",").map((mood) => mood.trim());
   try {
-    const newActivity = new Activity({ name, description, imageUrl, moods });
+    const newActivity = new Activity({
+      name,
+      description,
+      imageUrl,
+      moods,
+      detail,
+    });
     await newActivity.save();
     res.status(200).json(newActivity);
   } catch (err) {

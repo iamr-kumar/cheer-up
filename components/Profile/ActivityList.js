@@ -2,7 +2,8 @@ import { Typography } from "@material-ui/core";
 import ActivityCard from "./ActivityCard";
 import { Scrollbars } from "react-custom-scrollbars";
 
-const ActivityList = () => {
+const ActivityList = ({ list }) => {
+  console.log(list);
   return (
     <>
       <Typography variant="h5">Activities</Typography>
@@ -13,10 +14,9 @@ const ActivityList = () => {
         autoHideTimeout={1000}
         autoHideDuration={200}
       >
-        <ActivityCard />
-        <ActivityCard />
-        <ActivityCard />
-        <ActivityCard />
+        {list.map((item, index) => (
+          <ActivityCard key={index} item={item.length > 0 ? item[0] : null} />
+        ))}
       </Scrollbars>
     </>
   );
