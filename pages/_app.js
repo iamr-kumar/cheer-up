@@ -20,6 +20,7 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   const userProtectedRoutes =
     ctx.pathname === "/user/profile" ||
     ctx.pathname === "/user/activities" ||
+    ctx.pathname === "/user/history" ||
     ctx.pathname === "/user/dashboard" ||
     ctx.pathname === "/user/journal";
   const userSemiProtectedRoutes = ctx.pathname === "/user/create-profile";

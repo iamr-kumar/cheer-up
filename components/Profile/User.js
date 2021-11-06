@@ -14,7 +14,7 @@ import Router from "next/router";
 const User = ({ history }) => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(history);
+  const activityHistory = history.length > 10 ? history.slice(0, 10) : history;
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -64,7 +64,7 @@ const User = ({ history }) => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
-            <ActivityList list={history} />
+            <ActivityList list={activityHistory} />
           </GridBox>
         </Grid>
       </Grid>
