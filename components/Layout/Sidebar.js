@@ -98,12 +98,12 @@ const Sidebar = ({ open, handleDrawerClose, user }) => {
           </ListItem>
         </Link>
         {user.category === "user" && (
-          <Link href="/user/history" passHref>
+          <Link href="/user/dashboard" passHref>
             <ListItem button component="a">
               <ListItemIcon>
                 <TimelineIcon />
               </ListItemIcon>
-              <ListItemText primary="Activities" />
+              <ListItemText primary="Dashboard" />
             </ListItem>
           </Link>
         )}

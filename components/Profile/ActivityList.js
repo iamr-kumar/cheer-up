@@ -3,10 +3,9 @@ import ActivityCard from "./ActivityCard";
 import { Scrollbars } from "react-custom-scrollbars";
 
 const ActivityList = ({ list }) => {
-  console.log(list);
   return (
     <>
-      <Typography variant="h5">Activities</Typography>
+      <Typography variant="h5">Past Activities</Typography>
       <Scrollbars
         style={{ height: 650 }}
         universal={true}

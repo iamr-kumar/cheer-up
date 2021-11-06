@@ -26,14 +26,12 @@ export async function getServerSideProps(context) {
         "auth-token": token,
       },
     });
-    console.log(res.data);
     return {
       props: {
         pastActivities: res.data.activityHistory,
       },
     };
   } catch (err) {
-    console.log(err);
     return {
       props: {
         err: JSON.stringify(err),

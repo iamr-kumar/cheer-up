@@ -44,7 +44,6 @@ const ActivityDetail = (props) => {
   const handleDone = () => setDoneMessage(null);
 
   const handleSelect = async () => {
-    console.log(moodHistory._id);
     setLoading(true);
     try {
       const res = await axios.patch(

@@ -93,7 +93,7 @@ export async function getServerSideProps(context) {
     console.log(err);
     return {
       props: {
-        err,
+        err: JSON.stringify(err),
       },
     };
   }
