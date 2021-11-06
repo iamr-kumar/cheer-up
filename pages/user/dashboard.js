@@ -34,8 +34,3 @@ const Dashboard = ({ user }) => {
 };
 
 export default Dashboard;
-
-const Heading = styled.div`
-  font-weight: bolder;
-  margin-top: 20px;
-`;
