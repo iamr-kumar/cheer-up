@@ -9,7 +9,6 @@ router.post("/analyze-tone", auth, async (req, res) => {
   try {
     const text = req.body.text;
     const user = req.user;
-    console.log(user);
     const tone = await analyzeTone(text);
     const { document_tone: moods } = tone;
     const activities = [];
@@ -21,13 +20,25 @@ router.post("/analyze-tone", auth, async (req, res) => {
       });
       forThisTone && activities.push(forThisTone);
     }
-    // const moodHistory = new MoodHistory({
-    //   userId: user.id,
-    //   text,
-    //   moods: tones,
-    // });
-    // const newMoodHistory = await moodHistory.save();
-    res.json({ activities, tones });
+    const moodHistory = new MoodHistory({
+      userId: user.id,
+      text,
+      moods: tones,
+    });
+    const newMoodHistory = await moodHistory.save();
+    res.json({ activities, tones, moodHistory: newMoodHistory });
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+  }
+});
+
+router.patch("/mood-history/:id", auth, async (req, res) => {
+  try {
+    const moodHistory = await MoodHistory.findById(req.params.id);
+    moodHistory.activities.push(req.body.activity);
+    const updatedMoodHistory = await moodHistory.save();
+    res.json({ updatedMoodHistory });
   } catch (err) {
     console.log(err);
     res.json(err);

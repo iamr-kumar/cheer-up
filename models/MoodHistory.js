@@ -20,8 +20,8 @@ const MoodHistorySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  activity: {
-    type: mongoose.Schema.Types.ObjectId,
+  activities: {
+    type: [mongoose.Schema.Types.ObjectId],
     ref: "Activity",
   },
 });

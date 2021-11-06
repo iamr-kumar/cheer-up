@@ -9,7 +9,7 @@ import { baseUrl } from "../../utils/config";
 import { parseCookies } from "nookies";
 import ActivityDetail from "../../components/Profile/ActivityDetail";
 
-const Activities = ({ activities, tones, err, user }) => {
+const Activities = ({ activities, tones, err, user, moodHistory }) => {
   const [open, setOpen] = React.useState(false);
   const [currActivity, setCurrActivity] = React.useState(null);
 
@@ -52,6 +52,7 @@ const Activities = ({ activities, tones, err, user }) => {
           handleClose={handleToggle}
           open={open}
           activity={currActivity}
+          moodHistory={moodHistory}
         />
       </Layout>
     </>
@@ -85,6 +86,7 @@ export async function getServerSideProps(context) {
       props: {
         activities: res.data.activities,
         tones: res.data.tones,
+        moodHistory: res.data.moodHistory,
       },
     };
   } catch (err) {
