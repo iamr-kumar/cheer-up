@@ -10,7 +10,6 @@ import styled from "styled-components";
 
 //Individual activity card in activity list
 const ActivityCard = ({ item }) => {
-  console.log(item);
   return (
     item !== null && (
       <CustomCard sx={{ maxWidth: 345 }}>
