@@ -13,7 +13,6 @@ const MoodHistorySchema = new mongoose.Schema({
   },
   moods: {
     type: [String],
-    enum: Moods,
     required: true,
   },
   date: {
