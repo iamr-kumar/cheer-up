@@ -82,11 +82,10 @@ export async function getServerSideProps(context) {
         },
       }
     );
-    console.log(res.data.uniqueActivities.length);
 
     return {
       props: {
-        activities: res.data.uniqueActivities,
+        activities: res.data.activities,
         tones: res.data.tones,
         moodHistory: res.data.moodHistory,
       },

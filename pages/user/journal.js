@@ -8,7 +8,7 @@ const Journal = ({ user }) => {
         <title>Journal</title>
       </Head>
       <Layout user={user}>
-        <Journ />
+        <Journ user={user} />
       </Layout>
     </>
   );

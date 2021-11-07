@@ -13,7 +13,7 @@ const PatientInfo = ({ user }) => {
         <title>Patient Info</title>
       </Head>
       <Layout user={user}>
-        <Grid container spacing={6} justifyContent="center" className="cont">
+        <Grid container spacing={6} className="cont">
           <Grid item xs={12} lg={4} sm={12}>
             <div>
               <PatientData

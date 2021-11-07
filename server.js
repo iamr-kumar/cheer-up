@@ -20,6 +20,7 @@ nextApp.prepare().then(() => {
   app.use("/api/signup", require("./api/auth/signup"));
   app.use("/api/auth", require("./api/auth/auth"));
   app.use("/api/user", require("./api/users/activity"));
+  app.use("/api/user/journal", require("./api/users/journal"));
   app.use("/api/user-therapist", require("./api/users/therapist"));
   app.use("/api/profile", require("./api/users/profile"));
   app.use("/api/activities", require("./api/activity/activity"));

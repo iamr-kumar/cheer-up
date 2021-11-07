@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const User = ({ history }) => {
+const User = ({ history, user }) => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const activityHistory = history.length > 10 ? history.slice(0, 10) : history;
@@ -43,7 +43,7 @@ const User = ({ history }) => {
         <Grid item xs={12} lg={6} sm={12}>
           <div>
             <div>
-              <Typography variant="h4">Hello, Ritik</Typography>
+              <Typography variant="h4">Hello, {user.name}</Typography>
               <Typography variant="h5">How do you feel today?</Typography>
             </div>
             <InputArea>
@@ -75,7 +75,11 @@ const User = ({ history }) => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
-            <ActivityList list={activityHistory} />
+            {activityHistory.length > 0 ? (
+              <ActivityList list={activityHistory} />
+            ) : (
+              "No activities for the past week"
+            )}
           </GridBox>
         </Grid>
       </Grid>

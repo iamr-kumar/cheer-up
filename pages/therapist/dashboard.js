@@ -11,7 +11,7 @@ const Dashboard = ({ user }) => {
         <title>Therapist Dashboard</title>
       </Head>
       <Layout user={user}>
-        <Grid container spacing={6} justifyContent="center" className="cont">
+        <Grid container spacing={6} className="cont">
           <Grid item xs={12} lg={12} sm={12}>
             <TherapistData
               name="Shruti Sharma"

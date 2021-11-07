@@ -6,32 +6,78 @@ import {
   Box,
   Button,
   CircularProgress,
+  Snackbar,
 } from "@material-ui/core";
 import JournalList from "./JournalList";
-import { Scrollbars } from "react-custom-scrollbars";
-import Link from "next/link";
+import axios from "axios";
+import Cookies from "js-cookie";
+import MuiAlert from "@material-ui/lab/Alert";
+import { baseUrl } from "../../utils/config";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 //journal writing page
-const Journ = () => {
+const Journ = ({ user }) => {
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const token = Cookies.get("token");
+  const [message, setMessage] = useState(null);
+
+  const handleChange = (event) => {
+    setText(event.target.value);
+  };
+
+  const handleClose = () => {
+    setMessage(null);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const res = axios.post(
+        `${baseUrl}/api/user/journal/new`,
+        { text },
+        { headers: { "auth-token": token } }
+      );
+      setMessage({ type: "success", message: "Journal added!" });
+    } catch (err) {
+      console.log(err);
+      setMessage({ type: "error", message: "Error adding journal!" });
+    }
+    setLoading(false);
+  };
+
   return (
     <Section>
-      <Grid container spacing={6} justifyContent="center" className="cont">
+      <Grid container spacing={6} className="cont">
         <Grid item xs={12} lg={8}>
           <div>
             <div>
-              <Typography variant="h4">Hey Ritik</Typography>
+              <Typography variant="h4">Hey {user.name}</Typography>
               <Typography variant="h6">
                 Go on! Write your stories or journals.
               </Typography>
             </div>
             <InputArea>
-              <TextArea rows="12" cols="70" name="text"></TextArea>
-              <SubmitButton type="submit" variant="contained" color="primary">
-                {/* {loading ? (
-                  <CircularProgress color="inherit" size={25} />
-                ) : ( */}
-                Submit
-                {/* )} */}
+              <TextArea
+                rows="12"
+                cols="70"
+                name="text"
+                onChange={handleChange}
+              ></TextArea>
+              <SubmitButton
+                type="submit"
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+              >
+                {loading ? (
+                  <CircularProgress color="inherit" size={24} />
+                ) : (
+                  "Submit"
+                )}
               </SubmitButton>
             </InputArea>
           </div>
@@ -43,6 +89,17 @@ const Journ = () => {
           </GridBox>
         </Grid>
       </Grid>
+      {message && (
+        <Snackbar
+          open={message !== null ? true : false}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity={message.type}>
+            {message.message}
+          </Alert>
+        </Snackbar>
+      )}
     </Section>
   );
 };

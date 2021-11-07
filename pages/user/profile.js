@@ -12,7 +12,7 @@ const Profile = ({ user, pastActivities }) => {
         <title>Profile</title>
       </Head>
       <Layout user={user}>
-        <User history={pastActivities} />
+        <User history={pastActivities} user={user} />
       </Layout>
     </>
   );
