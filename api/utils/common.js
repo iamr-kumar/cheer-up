@@ -1,4 +1,4 @@
-const Moods = ["Happy", "Sadness", "Anger", "Joy", "Fear", "Tentative"];
+const Moods = ["happy", "sadness", "anger", "joy", "fear", "tentative"];
 module.exports = {
   Moods,
 };
