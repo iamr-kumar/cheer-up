@@ -11,22 +11,37 @@ router.post("/analyze-tone", auth, async (req, res) => {
     const user = req.user;
     const tone = await analyzeTone(text);
     const { document_tone: moods } = tone;
-    const activities = [];
+    let activities = [];
     const tones = [];
     for (const mood of moods.tones) {
       tones.push(mood.tone_name);
-      const forThisTone = await Activity.findOne({
+      const forThisTone = await Activity.find({
         moods: mood.tone_name.toLowerCase(),
       });
-      forThisTone && activities.push(forThisTone);
+      forThisTone.length > 0 && activities.push(forThisTone);
     }
+    activities = activities.flat();
+    const idSet = new Set();
+    activities = activities.filter((activity) => {
+      if (idSet.has(activity._id.toString())) {
+        return false;
+      }
+      idSet.add(activity._id.toString());
+      return true;
+    });
+
     const moodHistory = new MoodHistory({
       userId: user.id,
       text,
       moods: tones,
     });
     const newMoodHistory = await moodHistory.save();
-    res.json({ activities, tones, moodHistory: newMoodHistory });
+
+    res.json({
+      activities,
+      tones,
+      moodHistory: newMoodHistory,
+    });
   } catch (err) {
     console.log(err);
     res.json(err);
