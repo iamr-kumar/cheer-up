@@ -30,7 +30,7 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     ctx.pathname === "/therapist/dashboard";
   const therapistSemiProtectedRoutes =
     ctx.pathname === "/therapist/create-profile";
-  console.log(userSemiProtectedRoutes, userProtectedRoutes);
+
   if (!token) {
     destroyCookie(ctx, "token");
     (userProtectedRoutes ||

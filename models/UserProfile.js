@@ -20,7 +20,7 @@ const UserProfileSchema = new mongoose.Schema({
   },
   therapist: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "user",
   },
 });
 

@@ -2,7 +2,17 @@ const express = require("express");
 const router = express.Router();
 const UserProfile = require("../../models/UserProfile");
 const TherapistProfile = require("../../models/TherapistProfile");
-const { check, validationResult } = require("express-validator");
+const auth = require("../../middleware/auth");
+
+router.get("/me", auth, async (req, res) => {
+  try {
+    const profile = await UserProfile.findOne({ user: req.user.id });
+    res.json({ profile });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 // create user profile
 router.post("/user", async (req, res) => {

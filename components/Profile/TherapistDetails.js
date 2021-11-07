@@ -33,10 +33,8 @@ const TherapistDetails = ({
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12} lg={4}>
               <UserImg
-                component="img"
-                image="https://shtheme.com/demosd/medifine/wp-content/uploads/2017/07/doctor-single-2.jpg"
+                src="https://shtheme.com/demosd/medifine/wp-content/uploads/2017/07/doctor-single-2.jpg"
                 alt="green iguana"
-                maxwidth="300"
               />
               <SelectButton variant="contained" color="primary">
                 {" "}
@@ -117,8 +115,10 @@ const CustomCard = styled(Card)`
 const Name = styled.span`
   font-weight: 600;
 `;
-const UserImg = styled(CardMedia)`
+const UserImg = styled.img`
   border-radius: 50%;
+  height: 400px;
+  width: 400px;
 `;
 
 const SelectButton = styled(Button)`

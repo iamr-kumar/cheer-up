@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const TherapistProfileSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "user",
   },
   bio: {
     type: String,
@@ -16,6 +16,15 @@ const TherapistProfileSchema = new mongoose.Schema({
     type: String,
   },
   mobile: {
+    type: Number,
+  },
+  client: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
+  rating: {
     type: Number,
   },
 });
