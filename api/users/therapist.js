@@ -51,11 +51,12 @@ router.post("/connect", auth, async (req, res) => {
     const userProfile = await UserProfile.findOne({
       user: user.id,
     });
+
     if (userProfile.therapist) {
       return res.status(400).json({ message: "You already have a therapist" });
     }
     const pendingRequest = await Request.findOne({
-      user: user.id,
+      user: userProfile._id,
       status: "pending",
     });
     if (pendingRequest) {
@@ -64,14 +65,14 @@ router.post("/connect", auth, async (req, res) => {
         .json({ message: "You already have a pending request" });
     }
     const request = new Request({
-      user: user.id,
+      user: userProfile._id,
       therapist: therapistId,
       message: message,
     });
     await request.save();
     return res.json({ message: "Request sent successfully" });
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
     return res.status(500).json({ message: "Could not send request" });
   }
 });
