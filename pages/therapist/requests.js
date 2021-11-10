@@ -8,24 +8,14 @@ import axios from "axios";
 import { baseUrl } from "../../utils/config";
 
 const Requests = ({ user, pending }) => {
-  const [pendingRequests, setPendingRequests] = React.useState(pending);
-
-  const updateRequests = (index) => {
-    setPendingRequests(pendingRequests.splice(index, 1));
-  };
   return (
     <>
       <Layout user={user}>
         <Container>
           <Typography variant="h4">Pending Client Requests</Typography>
-          {pendingRequests.length > 0 ? (
-            pendingRequests.map((request, index) => (
-              <RequestCard
-                key={request._id}
-                request={request}
-                index={index}
-                update={updateRequests}
-              />
+          {pending.length > 0 ? (
+            pending.map((request, index) => (
+              <RequestCard key={request._id} request={request} index={index} />
             ))
           ) : (
             <Typography variant="h5">No Pending Requests</Typography>

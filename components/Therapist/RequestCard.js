@@ -18,13 +18,15 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const RequestCard = ({ request, index, update }) => {
+const RequestCard = ({ request, index }) => {
   const [acceptLoading, setAcceptLoading] = React.useState(false);
   const [rejectLoading, setRejectLoading] = React.useState(false);
   const [message, setMessage] = React.useState(null);
   const token = Cookies.get("token");
+
   const handleAccept = async () => {
     setAcceptLoading(true);
+
     try {
       const res = await axios.patch(
         `${baseUrl}/api/therapist/request/accept/${request._id}`,
@@ -32,9 +34,7 @@ const RequestCard = ({ request, index, update }) => {
         { headers: { "auth-token": token } }
       );
       setMessage({ type: "success", message: res.data.message });
-      update(index);
     } catch (err) {
-      console.log(err);
       setMessage({ type: "error", message: "Some error occurred!" });
     }
     setAcceptLoading(false);
@@ -49,7 +49,7 @@ const RequestCard = ({ request, index, update }) => {
         { headers: { "auth-token": token } }
       );
       setMessage({ type: "success", message: res.data.message });
-      update(index);
+      // update(index);
     } catch (err) {
       console.log(err);
       setMessage({ type: "error", message: "Some error occurred" });
@@ -70,7 +70,7 @@ const RequestCard = ({ request, index, update }) => {
           <div>
             <Typography variant="h5">{request.user.user.name}</Typography>
             <Typography variant="subtitle1">
-              {request.user.issues && request.user.issues.join(",")}
+              {request.user.issues && request.user.issues.join(", ")}
             </Typography>
 
             <div style={{ margin: "10px 0px", display: "flex" }}>

@@ -6,7 +6,15 @@ const auth = require("../../middleware/auth");
 
 router.get("/me", auth, async (req, res) => {
   try {
-    const profile = await UserProfile.findOne({ user: req.user.id });
+    const profile = await UserProfile.findOne({ user: req.user.id }).populate({
+      path: "therapist",
+      model: "TherapistProfile",
+      populate: {
+        path: "user",
+        model: "user",
+        select: "-password",
+      },
+    });
     res.json({ profile });
   } catch (err) {
     console.error(err.message);
@@ -58,6 +66,7 @@ router.post("/therapist", async (req, res) => {
   if (city) profileFields.city = city;
   if (country) profileFields.country = country;
   if (mobile) profileFields.mobile = mobile;
+
   try {
     let therapistProfile = await TherapistProfile.findOne({ user: user });
     if (therapistProfile) {

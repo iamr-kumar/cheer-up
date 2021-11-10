@@ -5,7 +5,6 @@ import { Scrollbars } from "react-custom-scrollbars";
 const ActivityList = ({ list }) => {
   return (
     <>
-      <Typography variant="h5">Past Activities</Typography>
       <Scrollbars
         style={{ height: 650 }}
         universal={true}

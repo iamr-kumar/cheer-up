@@ -22,6 +22,7 @@ const CreateUserProfile = ({ user }) => {
     bio: "",
     mobile: "",
     country: "",
+
     city: "",
   });
   const [loading, setLoading] = useState(false);
@@ -76,6 +77,7 @@ const CreateUserProfile = ({ user }) => {
                       rows={4}
                       multiline
                     />
+
                     <TextField
                       variant="outlined"
                       margin="normal"

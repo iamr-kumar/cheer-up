@@ -75,6 +75,7 @@ const User = ({ history, user }) => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
+            <Typography variant="h5">Past Activities</Typography>
             {activityHistory.length > 0 ? (
               <ActivityList list={activityHistory} />
             ) : (
