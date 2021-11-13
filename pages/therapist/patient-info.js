@@ -14,29 +14,27 @@ const PatientInfo = ({ user }) => {
       </Head>
       <Layout user={user}>
         <Grid container spacing={6} className="cont">
-          <Grid item xs={12} lg={4} sm={12}>
-            <div>
-              <PatientData
-                name="Ahana"
-                email="ahana@yahoo.com"
-                city="Dumka"
-                country="India"
-                issue="blah blah blah"
-                medication="trah trah trah"
-              />
-            </div>
+          <Grid item xs={12} lg={4} sm={12} style={{ display: "grid" }}>
+            <PatientData
+              name="Ahana"
+              email="ahana@yahoo.com"
+              city="Dumka"
+              country="India"
+              issue="blah blah blah"
+              medication="trah trah trah"
+            />
           </Grid>
-          <Grid item xs={12} lg={8} sm={12}>
+          <Grid item xs={12} lg={8} sm={12} style={{ display: "grid" }}>
             <div>
               <MoodGraph />
             </div>
           </Grid>
-          <Grid item xs={12} lg={6} sm={12}>
+          <Grid item xs={12} lg={6} sm={12} style={{ display: "grid" }}>
             <div>
               <ActivityList />{" "}
             </div>
           </Grid>
-          <Grid item xs={12} lg={6} sm={12}>
+          <Grid item xs={12} lg={6} sm={12} style={{ display: "grid" }}>
             <div>
               <JournalList />{" "}
             </div>

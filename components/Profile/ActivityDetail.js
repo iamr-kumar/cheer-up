@@ -87,15 +87,12 @@ const ActivityDetail = (props) => {
               <Typography variant="h4" color="inherit">
                 {activity.name}
               </Typography>
-              <SubmitButton
-                variant="contained"
-                onClick={handleSelect}
-              >
+              <SubmitButton variant="contained" onClick={handleSelect}>
                 Select
               </SubmitButton>
             </TitleContainer>
             <ActivityDescription>
-            <Typography variant="body1" color="inherit">
+              <Typography variant="body1" color="inherit">
                 {activity.detail}
               </Typography>
             </ActivityDescription>

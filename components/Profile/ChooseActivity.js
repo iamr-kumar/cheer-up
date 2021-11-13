@@ -11,8 +11,8 @@ import styled from "styled-components";
 //Each card in activity shown after depicting mood
 const ChooseActivity = ({ btnText, activity, handleOpen }) => {
   return (
-    <CustomCard >
-      <CardActionArea style={{height : 450}}>
+    <CustomCard>
+      <CardActionArea style={{ height: 450 }}>
         <CardMedia
           component="img"
           image={activity.imageUrl}

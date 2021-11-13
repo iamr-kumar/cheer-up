@@ -14,7 +14,7 @@ const Dashboard = ({ user }) => {
       </Head>
       <Layout user={user}>
         <Grid container spacing={6} className="cont">
-          <Grid item xs={12} lg={4} sm={12}>
+          <Grid item xs={12} lg={4} sm={12} style={{ display: "grid" }}>
             <UserData
               name="Ahana"
               email="ahana@yahoo.com"
@@ -24,7 +24,7 @@ const Dashboard = ({ user }) => {
               medication="trah trah trah"
             />
           </Grid>
-          <Grid item xs={12} lg={8} sm={12}>
+          <Grid item xs={12} lg={8} sm={12} style={{ display: "grid" }}>
             <MoodGraph />
           </Grid>
         </Grid>
