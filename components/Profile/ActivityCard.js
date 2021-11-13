@@ -24,7 +24,7 @@ const ActivityCard = ({ item }) => {
             <Typography gutterBottom variant="h5" component="div">
               {item.activity.name}
             </Typography>
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant="body1" color="textSecondary">
               {item.activity.description}
             </Typography>
             <Typography variant="body2" style={{ marginTop: 4 }}>

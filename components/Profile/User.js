@@ -116,7 +116,7 @@ const TextArea = styled.textarea`
 `;
 
 const GridBox = styled(Box)`
-  max-height: 75vh;
+  max-height: 95vh;
   overflow: hidden;
   marging-top: 1rem;
 `;

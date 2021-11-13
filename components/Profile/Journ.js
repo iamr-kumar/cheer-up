@@ -52,7 +52,7 @@ const Journ = ({ user }) => {
   return (
     <Section>
       <Grid container spacing={6} className="cont">
-        <Grid item xs={12} lg={8}>
+        <Grid item xs={12} lg={6} sm={12}>
           <div>
             <div>
               <Typography variant="h4">Hey {user.name}</Typography>
@@ -62,8 +62,8 @@ const Journ = ({ user }) => {
             </div>
             <InputArea>
               <TextArea
-                rows="12"
-                cols="70"
+                rows="18"
+                cols="50"
                 name="text"
                 onChange={handleChange}
               ></TextArea>
@@ -83,7 +83,7 @@ const Journ = ({ user }) => {
           </div>
         </Grid>
 
-        <Grid item xs={8} lg={4}>
+        <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
             <JournalList />
           </GridBox>
@@ -130,7 +130,7 @@ const TextArea = styled.textarea`
 `;
 
 const GridBox = styled(Box)`
-  max-height: 75vh;
+  max-height: 95vh;
   overflow: hidden;
   marging-top: 1rem;
 `;

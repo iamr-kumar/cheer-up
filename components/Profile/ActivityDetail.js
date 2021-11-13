@@ -84,18 +84,21 @@ const ActivityDetail = (props) => {
           <div>
             <ActivityDetailImage src={activity.imageUrl} alt={activity.name} />
             <TitleContainer>
-              <Typography variant="h3" color="inherit">
+              <Typography variant="h4" color="inherit">
                 {activity.name}
               </Typography>
-              <Button
-                color="primary"
+              <SubmitButton
                 variant="contained"
                 onClick={handleSelect}
               >
                 Select
-              </Button>
+              </SubmitButton>
             </TitleContainer>
-            <ActivityDescription>{activity.detail}</ActivityDescription>
+            <ActivityDescription>
+            <Typography variant="body1" color="inherit">
+                {activity.detail}
+              </Typography>
+            </ActivityDescription>
           </div>
         </Container>
         <Backdrop open={loading} className={classes.backdrop}>
@@ -118,11 +121,11 @@ const ActivityDetail = (props) => {
 export default ActivityDetail;
 
 const Container = styled.div`
-  padding: 6rem 2rem;
+  padding: 6rem 8rem;
 `;
 
 const ActivityDetailImage = styled.img`
-  width: 100%;
+  width: 50%;
   height: 400px;
   margin-bottom: 1rem;
 `;
@@ -133,8 +136,20 @@ const TitleContainer = styled.div`
   align-items: center;
   margin-bottom: 1rem;
 `;
-
+const SubmitButton = styled(Button)`
+  &&& {
+    background: rgb(0, 125, 254);
+    font-size: 16px;
+    color: #fff;
+    border: 0;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  &&&:hover {
+    box-shadow: 3px 3px #c5c6d0;
+  }
+`;
 const ActivityDescription = styled.p`
   margin-top: 1rem;
-  margin-left: 1rem;
 `;

@@ -11,13 +11,13 @@ import styled from "styled-components";
 //Each card in activity shown after depicting mood
 const ChooseActivity = ({ btnText, activity, handleOpen }) => {
   return (
-    <CustomCard sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+    <CustomCard >
+      <CardActionArea style={{height : 450}}>
         <CardMedia
           component="img"
-          height="200"
           image={activity.imageUrl}
           alt={activity.name}
+          height={250}
         />
         <CardContent>
           <Banner>
@@ -25,7 +25,7 @@ const ChooseActivity = ({ btnText, activity, handleOpen }) => {
               {activity.name}
             </Typography>
           </Banner>
-          <Typography variant="body2" color="textSecondary">
+          <Typography variant="body1" color="textSecondary">
             {activity.description}
           </Typography>
         </CardContent>
