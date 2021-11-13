@@ -54,10 +54,8 @@ const TherapistCard = ({ therapist }) => {
             alt="Doctor"
           />
           <div>
-            <Typography variant="h5">{`Dr. ${therapist.name}`}</Typography>
-            <Typography variant="subtitle1">
-              {therapist.bio.substr(0, 20)}
-            </Typography>
+            <Typography variant="h5">{`Dr. ${therapist.user.name}`}</Typography>
+            <Typography variant="subtitle1">{therapist.bio}</Typography>
 
             <Rating>
               <StarIcon />

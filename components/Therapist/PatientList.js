@@ -7,8 +7,8 @@ const PatientList = () => {
       <Typography gutterBottom variant="h3" component="div" align="center">
         Here's a list of all patients.
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={4}>
+      <Grid container spacing={4}>
+        <Grid item xs={3}>
           <PatientCard
             name="Ahana"
             email="ahana@yahoo.com"
@@ -16,7 +16,7 @@ const PatientList = () => {
             country="India"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <PatientCard
             name="Ahana"
             email="ahana@yahoo.com"
@@ -24,7 +24,7 @@ const PatientList = () => {
             country="India"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <PatientCard
             name="Ahana"
             email="ahana@yahoo.com"
@@ -32,7 +32,7 @@ const PatientList = () => {
             country="India"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <PatientCard
             name="Ahana"
             email="ahana@yahoo.com"
@@ -40,7 +40,7 @@ const PatientList = () => {
             country="India"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <PatientCard
             name="Ahana"
             email="ahana@yahoo.com"

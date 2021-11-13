@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const RequestSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "UserProfile",
     required: true,
   },
   therapist: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "TherapistProfile",
     required: true,
   },
   message: {

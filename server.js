@@ -24,7 +24,7 @@ nextApp.prepare().then(() => {
   app.use("/api/user-therapist", require("./api/users/therapist"));
   app.use("/api/profile", require("./api/users/profile"));
   app.use("/api/activities", require("./api/activity/activity"));
-
+  app.use("/api/therapist/request", require("./api/therapist/request"));
   app.all("*", (req, res) => handle(req, res));
 
   server.listen(PORT, (err) => {

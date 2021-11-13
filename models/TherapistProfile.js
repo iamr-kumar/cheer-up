@@ -9,6 +9,7 @@ const TherapistProfileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   city: {
     type: String,
   },
@@ -18,10 +19,11 @@ const TherapistProfileSchema = new mongoose.Schema({
   mobile: {
     type: Number,
   },
+
   client: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "UserProfile",
     },
   ],
   rating: {
