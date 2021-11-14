@@ -3,6 +3,8 @@ const router = express.Router();
 const UserProfile = require("../../models/UserProfile");
 const TherapistProfile = require("../../models/TherapistProfile");
 const auth = require("../../middleware/auth");
+const MoodHistory = require("../../models/MoodHistory");
+const Journal = require("../../models/Journal");
 
 router.get("/me", auth, async (req, res) => {
   try {
@@ -87,11 +89,35 @@ router.post("/therapist", async (req, res) => {
 });
 
 // Get user profile
-router.get("/user/:id", async (req, res) => {
+router.get("/user/:id", auth, async (req, res) => {
   try {
-    const userProfile = await UserProfile.findOne({ user: req.params.id });
+    const therapist = await TherapistProfile.findOne({ user: req.user.id });
+    const userProfile = await UserProfile.findOne({
+      user: req.params.id,
+    }).populate({ path: "user", mode: "user", select: "-password" });
+
+    if (therapist._id.toString() !== userProfile.therapist.toString()) {
+      console.log(therapist._id, userProfile.therapist);
+      return res.status(401).json({ msg: "Not Authorized" });
+    }
+    const today = new Date();
+    const past7Day = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const moodHistory = await MoodHistory.find({
+      userId: userProfile.user,
+      date: {
+        $gte: past7Day,
+        $lt: today,
+      },
+    }).populate("activities");
+    const journals = await Journal.find({
+      userId: userProfile.user,
+      date: {
+        $gte: past7Day,
+        $lt: today,
+      },
+    });
     if (userProfile) {
-      return res.json(userProfile);
+      return res.json({ userProfile, moodHistory, journals });
     } else {
       return res.status(404).json({ msg: "User profile not found" });
     }

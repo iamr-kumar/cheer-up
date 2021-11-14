@@ -12,7 +12,7 @@ import ActivityDetail from "../../components/Profile/ActivityDetail";
 const Activities = ({ activities, tones, err, user, moodHistory }) => {
   const [open, setOpen] = React.useState(false);
   const [currActivity, setCurrActivity] = React.useState(null);
-  console.log(activities);
+
   const handleToggle = (activity) => {
     setOpen(!open);
     if (currActivity === null) setCurrActivity(activity);

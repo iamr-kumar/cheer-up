@@ -11,7 +11,7 @@ import {
 import RoomIcon from "@material-ui/icons/Room";
 
 // Individual patient info card
-const PatientData = ({ name, email, city, country, issue, medication }) => {
+const PatientData = ({ name, email, city, country, issues, medication }) => {
   return (
     <CustomCard sx={{ maxWidth: 200 }}>
       <CardActionArea>
@@ -24,13 +24,16 @@ const PatientData = ({ name, email, city, country, issue, medication }) => {
           <Banner>
             <Name>{name}</Name>
             <Email>{email}</Email>
-
-            <Typography variant="h6" color="textSecondary">
-              Issue : {issue}
-            </Typography>
-            <Typography variant="h6" color="textSecondary">
-              Medication : {medication}
-            </Typography>
+            {issues && issues.length > 0 && (
+              <Typography variant="h6" color="textSecondary">
+                Issues : {issues.join(", ")}
+              </Typography>
+            )}
+            {medication && medication.length > 0 && (
+              <Typography variant="h6" color="textSecondary">
+                Medication : {medication.join(", ")}
+              </Typography>
+            )}
             <Address>
               <RoomIcon /> {city},{country}
             </Address>

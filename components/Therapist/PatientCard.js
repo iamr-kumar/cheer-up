@@ -8,9 +8,10 @@ import {
   Button,
 } from "@material-ui/core";
 import RoomIcon from "@material-ui/icons/Room";
+import Link from "next/link";
 
 //patient cards in patient list
-const PatientCard = ({ btnText, name, email, city, country }) => {
+const PatientCard = ({ btnText, id, name, email, city, country }) => {
   return (
     <CustomCard>
       <CardActionArea>
@@ -25,17 +26,15 @@ const PatientCard = ({ btnText, name, email, city, country }) => {
             <Name>{name}</Name>
             <Email>{email}</Email>
             <Address>
-              <RoomIcon /> {city},{country}
+              <RoomIcon /> {city}, {country}
             </Address>
           </Banner>
         </CardContent>
-        <SelectButton
-          variant="contained"
-          color="primary"
-          href="/therapist/patient-info"
-        >
-          View Profile
-        </SelectButton>
+        <Link href={{ pathname: "/therapist/client-info", query: { id } }}>
+          <SelectButton variant="contained" color="primary">
+            View Profile
+          </SelectButton>
+        </Link>
       </CardActionArea>
     </CustomCard>
   );
