@@ -30,7 +30,7 @@ const PatientCard = ({ btnText, id, name, email, city, country }) => {
             </Address>
           </Banner>
         </CardContent>
-        <Link href={{ pathname: "/therapist/client-info", query: { id } }}>
+        <Link href={`/therapist/client-info/${id}`}>
           <SelectButton variant="contained" color="primary">
             View Profile
           </SelectButton>

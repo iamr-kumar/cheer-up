@@ -22,13 +22,15 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     ctx.pathname === "/user/activities" ||
     ctx.pathname === "/user/dashboard" ||
     ctx.pathname === "/user/therapist" ||
+    ctx.pathname === "/user/message" ||
     ctx.pathname === "/user/journal";
   const userSemiProtectedRoutes = ctx.pathname === "/user/create-profile";
   const therapistProtectedRoutes =
     ctx.pathname === "/therapist/profile" ||
-    ctx.pathname === "/therapist/client-info" ||
+    ctx.pathname === "/therapist/client-info/[id]" ||
     ctx.pathname === "/therapist/requests" ||
-    ctx.pathname === "/therapist/dashboard";
+    ctx.pathname === "/therapist/dashboard" ||
+    ctx.pathname === "/therapist/message";
   const therapistSemiProtectedRoutes =
     ctx.pathname === "/therapist/create-profile";
 

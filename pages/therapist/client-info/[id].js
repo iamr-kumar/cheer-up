@@ -1,13 +1,13 @@
-import Layout from "../../components/Layout/Layout";
+import Layout from "../../../components/Layout/Layout";
 import Head from "next/dist/next-server/lib/head";
-import PatientData from "../../components/Therapist/PatientData";
-import ActivityList from "../../components/Profile/ActivityList";
-import JournalList from "../../components/Profile/JournalList";
-import MoodGraph from "../../components/Therapist/MoodGraph";
+import PatientData from "../../../components/Therapist/PatientData";
+import ActivityList from "../../../components/Profile/ActivityList";
+import JournalList from "../../../components/Profile/JournalList";
+import MoodGraph from "../../../components/Therapist/MoodGraph";
 import { Grid } from "@material-ui/core";
 import { parseCookies } from "nookies";
 import axios from "axios";
-import { baseUrl } from "../../utils/config";
+import { baseUrl } from "../../../utils/config";
 
 const PatientInfo = ({ user, userProfile, moodHistory, journals }) => {
   return (
@@ -52,7 +52,7 @@ export default PatientInfo;
 
 export async function getServerSideProps(context) {
   const { token } = parseCookies(context);
-  const { id } = context.query;
+  const { id } = context.params;
   try {
     const res = await axios.get(`${baseUrl}/api/profile/user/${id}`, {
       headers: {
@@ -60,7 +60,7 @@ export async function getServerSideProps(context) {
       },
     });
     const { userProfile, moodHistory, journals } = res.data;
-    console.log(res.data);
+
     return {
       props: {
         userProfile,

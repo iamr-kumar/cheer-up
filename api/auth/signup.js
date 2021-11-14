@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 
 const User = require("../../models/User");
+const ChatModel = require("../../models/ChatModel");
 
 // @route POST api/users
 // @desc Register user
@@ -50,6 +51,7 @@ router.post(
       user.password = await bcrypt.hash(password, salt);
       // save user
       await user.save();
+      await new ChatModel({ user: user._id, chats: [] }).save();
       const payload = {
         user: {
           id: user.id,

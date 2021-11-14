@@ -8,6 +8,7 @@ const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
 const UserProfile = require("./../../models/UserProfile");
 const TherapistProfile = require("./../../models/TherapistProfile");
+const ChatModel = require("../../models/ChatModel");
 
 // @route GET api/auth
 // @desc test route
@@ -64,6 +65,11 @@ router.post(
         return res
           .status(400)
           .json({ errors: [{ msg: "Invalid credentials" }] });
+      }
+
+      const chatModel = await ChatModel.findOne({ user: user._id });
+      if (!chatModel) {
+        await new ChatModel({ user: user._id, chats: [] }).save();
       }
 
       const payload = {
