@@ -12,9 +12,11 @@ import styled from "styled-components";
 import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
+import { useRouter } from "next/router";
 
 //User's therapist info card in user dashboard
 const TherapistDetails = ({ therapist }) => {
+  const router = useRouter();
   return (
     <>
       <CustomCard sx={{ maxWidth: 345 }} height="400">
@@ -25,9 +27,19 @@ const TherapistDetails = ({ therapist }) => {
                 src="https://shtheme.com/demosd/medifine/wp-content/uploads/2017/07/doctor-single-2.jpg"
                 alt="green iguana"
               />
-              <SelectButton variant="contained" color="primary">
-                {" "}
-                Text now{" "}
+
+              <SelectButton
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  router.push(
+                    `/user/message?message=${therapist.user._id}`,
+                    undefined,
+                    { shallow: true }
+                  )
+                }
+              >
+                Text now
               </SelectButton>
             </Grid>
             <Grid item xs={12} sm={12} lg={7}>

@@ -7,7 +7,7 @@ import SendIcon from "@material-ui/icons/Send";
 import Message from "./Message";
 import { useRouter } from "next/router";
 
-const ChatScreen = ({ socket, user, handleNewRecent }) => {
+const ChatScreen = ({ socket, user }) => {
   const router = useRouter();
   const [messages, setMessages] = useState([]);
   const [reciever, setReciever] = useState(null);
@@ -19,7 +19,6 @@ const ChatScreen = ({ socket, user, handleNewRecent }) => {
   const scrollToBottom = () => {
     endOfMessagesRef.current.scrollIntoView({
       behavior: "smooth",
-      block: "start",
     });
   };
 
@@ -30,7 +29,6 @@ const ChatScreen = ({ socket, user, handleNewRecent }) => {
         messageWith: router.query.message,
       });
       socket.current.on("messagesLoaded", ({ chat }) => {
-        console.log(chat);
         setMessages(chat.messages);
         setReciever(chat.messageWith);
         openChatId.current = chat.messageWith._id;
@@ -48,12 +46,17 @@ const ChatScreen = ({ socket, user, handleNewRecent }) => {
       socket.current.on("messageSent", ({ newMessage }) => {
         if (newMessage.receiver === openChatId.current) {
           setMessages((prev) => [...prev, newMessage]);
-          handleNewRecent(newMessage);
+
           scrollToBottom();
         }
       });
 
-      socket.current.on("noChatFound");
+      socket.current.on("newMessage", async ({ newMessage }) => {
+        if (newMessage.sender === openChatId.current) {
+          setMessages((prev) => [...prev, newMessage]);
+          scrollToBottom();
+        }
+      });
     }
   }, []);
 

@@ -9,7 +9,7 @@ const handle = nextApp.getRequestHandler();
 require("dotenv").config();
 const connectDB = require("./config/connectDB");
 const { loadMessages, sendMessage } = require("./config/messageAction");
-const { addUser } = require("./config/roomAction");
+const { addUser, findConnectedUser } = require("./config/roomAction");
 
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
@@ -36,6 +36,11 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", async ({ userId, messageTo, text }) => {
     const { error, newMessage } = await sendMessage(userId, messageTo, text);
+    const receiverSocket = findConnectedUser(messageTo);
+
+    if (receiverSocket) {
+      io.to(receiverSocket.socketId).emit("newMessage", { newMessage });
+    }
     if (!error) {
       socket.emit("messageSent", { newMessage });
     }
