@@ -14,38 +14,31 @@ import RoomIcon from "@material-ui/icons/Room";
 const PatientData = ({ name, email, city, country, issues, medication }) => {
   return (
     <CustomCard sx={{ maxWidth: 200 }}>
-      <CardActionArea>
+      <ImgContainer>
         <UserImg
-          component="img"
-          image="https://shtheme.com/demosd/medifine/wp-content/uploads/2017/07/doctor-single-2.jpg"
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
           alt="patient img"
         />
-        <CardContent>
-          <Banner>
-            <Name>{name}</Name>
-            <Email>{email}</Email>
-            {issues && issues.length > 0 && (
-              <Typography variant="h6" color="textSecondary">
-                Issues : {issues.join(", ")}
-              </Typography>
-            )}
-            {medication && medication.length > 0 && (
-              <Typography variant="h6" color="textSecondary">
-                Medication : {medication.join(", ")}
-              </Typography>
-            )}
-            <Address>
-              <RoomIcon /> {city},{country}
-            </Address>
-          </Banner>
-        </CardContent>
-        <Box textAlign="center">
-          <SelectButton variant="contained" color="primary">
-            {" "}
-            Text now{" "}
-          </SelectButton>
-        </Box>
-      </CardActionArea>
+      </ImgContainer>
+      <CardContent>
+        <Banner>
+          <Name>{name}</Name>
+          <Email>{email}</Email>
+          {issues && issues.length > 0 && (
+            <Typography variant="h6" color="textSecondary">
+              Issues : {issues.join(", ")}
+            </Typography>
+          )}
+          {medication && medication.length > 0 && (
+            <Typography variant="h6" color="textSecondary">
+              Medication : {medication.join(", ")}
+            </Typography>
+          )}
+          <Address>
+            <RoomIcon /> {city},{country}
+          </Address>
+        </Banner>
+      </CardContent>
     </CustomCard>
   );
 };
@@ -81,15 +74,15 @@ const Email = styled.p`
   text-align: center;
   margin-bottom: 0.5rem;
 `;
-const SelectButton = styled(Button)`
-  &&& {
-    background: rgb(0, 125, 254);
-  }
-  &&&:hover {
-    box-shadow: 3px 3px #c5c6d0;
-  }
+
+const ImgContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
-const UserImg = styled(CardMedia)`
+
+const UserImg = styled.img`
   border-radius: 50%;
   height: 350px;
+  width: 350px;
 `;

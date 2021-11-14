@@ -41,6 +41,7 @@ const Journ = ({ user }) => {
         { text },
         { headers: { "auth-token": token } }
       );
+
       setMessage({ type: "success", message: "Journal added!" });
     } catch (err) {
       console.log(err);

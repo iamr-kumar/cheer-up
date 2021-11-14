@@ -21,6 +21,7 @@ router.post("/new", auth, async (req, res) => {
       text,
       moods: tones,
     });
+    await journal.save();
 
     res.json({
       journal,

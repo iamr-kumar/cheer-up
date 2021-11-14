@@ -4,9 +4,13 @@ import TherapistDetails from "../../components/Profile/TherapistDetails";
 import MoodGraph from "../../components/Therapist/MoodGraph";
 import { Grid, Typography } from "@material-ui/core";
 import styled from "styled-components";
-import UserData from "../../components/Profile/UserData";
+import { baseUrl } from "../../utils/config";
 
-const Dashboard = ({ user }) => {
+import { parseCookies } from "nookies";
+import axios from "axios";
+import PatientData from "../../components/Therapist/PatientData";
+
+const Dashboard = ({ user, err, profile, moodPercentage }) => {
   return (
     <>
       <Head>
@@ -15,17 +19,17 @@ const Dashboard = ({ user }) => {
       <Layout user={user}>
         <Grid container spacing={6} className="cont">
           <Grid item xs={12} lg={4} sm={12} style={{ display: "grid" }}>
-            <UserData
-              name="Ahana"
-              email="ahana@yahoo.com"
-              city="Dumka"
-              country="India"
-              issue="blah blah blah"
-              medication="trah trah trah"
+            <PatientData
+              name={profile.user.name}
+              email={profile.user.email}
+              city={profile.city}
+              country={profile.country}
+              issues={profile.issues}
+              medication={profile.medication}
             />
           </Grid>
           <Grid item xs={12} lg={8} sm={12} style={{ display: "grid" }}>
-            <MoodGraph />
+            <MoodGraph moods={moodPercentage} />
           </Grid>
         </Grid>
       </Layout>
@@ -34,3 +38,28 @@ const Dashboard = ({ user }) => {
 };
 
 export default Dashboard;
+
+export async function getServerSideProps(context) {
+  const { token } = parseCookies(context);
+  try {
+    const res = await axios.get(`${baseUrl}/api/profile/me`, {
+      headers: {
+        "auth-token": token,
+      },
+    });
+
+    return {
+      props: {
+        profile: res.data.profile,
+        moodPercentage: res.data.moodPercentage,
+      },
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {
+        err: err.response.data,
+      },
+    };
+  }
+}

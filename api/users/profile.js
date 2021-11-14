@@ -5,6 +5,7 @@ const TherapistProfile = require("../../models/TherapistProfile");
 const auth = require("../../middleware/auth");
 const MoodHistory = require("../../models/MoodHistory");
 const Journal = require("../../models/Journal");
+const { calcMoodPercent } = require("../../config/moodAction");
 
 router.get("/me", auth, async (req, res) => {
   try {
@@ -17,7 +18,31 @@ router.get("/me", auth, async (req, res) => {
         select: "-password",
       },
     });
-    res.json({ profile });
+    const today = new Date();
+    const past7Day = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const moodHistory = await MoodHistory.find({
+      userId: profile.user,
+      date: {
+        $gte: past7Day,
+        $lt: today,
+      },
+    }).populate("activities");
+    const journals = await Journal.find({
+      userId: profile.user,
+      date: {
+        $gte: past7Day,
+        $lt: today,
+      },
+    });
+    let moodPercentage = null;
+    if (moodHistory.length > 0 || journals.length > 0) {
+      moodPercentage = calcMoodPercent(moodHistory, journals);
+    }
+    if (profile) {
+      return res.json({ profile, moodPercentage });
+    } else {
+      return res.status(404).json({ msg: "User profile not found" });
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -116,8 +141,9 @@ router.get("/user/:id", auth, async (req, res) => {
         $lt: today,
       },
     });
+    const moodPercentage = calcMoodPercent(moodHistory, journals);
     if (userProfile) {
-      return res.json({ userProfile, moodHistory, journals });
+      return res.json({ userProfile, moodHistory, journals, moodPercentage });
     } else {
       return res.status(404).json({ msg: "User profile not found" });
     }

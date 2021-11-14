@@ -9,7 +9,13 @@ import { parseCookies } from "nookies";
 import axios from "axios";
 import { baseUrl } from "../../../utils/config";
 
-const PatientInfo = ({ user, userProfile, moodHistory, journals }) => {
+const PatientInfo = ({
+  user,
+  userProfile,
+  moodHistory,
+  journals,
+  moodPercentage,
+}) => {
   return (
     <>
       <Head>
@@ -29,7 +35,7 @@ const PatientInfo = ({ user, userProfile, moodHistory, journals }) => {
           </Grid>
           <Grid item xs={12} lg={8} sm={12} style={{ display: "grid" }}>
             <div>
-              <MoodGraph />
+              <MoodGraph moods={moodPercentage} />
             </div>
           </Grid>
           {/* <Grid item xs={12} lg={6} sm={12} style={{ display: "grid" }}>
@@ -59,13 +65,14 @@ export async function getServerSideProps(context) {
         "auth-token": token,
       },
     });
-    const { userProfile, moodHistory, journals } = res.data;
+    const { userProfile, moodHistory, journals, moodPercentage } = res.data;
 
     return {
       props: {
         userProfile,
         moodHistory,
         journals,
+        moodPercentage,
       },
     };
   } catch (err) {
