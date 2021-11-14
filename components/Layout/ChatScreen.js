@@ -1,15 +1,72 @@
+import { useRef, useEffect, useState } from "react";
 import { Typography } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import styled from "styled-components";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import SendIcon from "@material-ui/icons/Send";
+import Message from "./Message";
+import { useRouter } from "next/router";
 
-const ChatScreen = () => {
+const ChatScreen = ({ socket, user, handleNewRecent }) => {
+  const router = useRouter();
+  const [messages, setMessages] = useState([]);
+  const [reciever, setReciever] = useState(null);
+  const [text, setText] = useState("");
+  const endOfMessagesRef = useRef(null);
+
+  const openChatId = useRef("");
+
   const scrollToBottom = () => {
     endOfMessagesRef.current.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
+  };
+
+  useEffect(() => {
+    const loadMessages = () => {
+      socket.current.emit("loadMessages", {
+        userId: user._id,
+        messageWith: router.query.message,
+      });
+      socket.current.on("messagesLoaded", ({ chat }) => {
+        console.log(chat);
+        setMessages(chat.messages);
+        setReciever(chat.messageWith);
+        openChatId.current = chat.messageWith._id;
+        scrollToBottom();
+      });
+    };
+
+    if (socket.current) {
+      loadMessages();
+    }
+  }, [router.query.message]);
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("messageSent", ({ newMessage }) => {
+        if (newMessage.receiver === openChatId.current) {
+          setMessages((prev) => [...prev, newMessage]);
+          handleNewRecent(newMessage);
+          scrollToBottom();
+        }
+      });
+
+      socket.current.on("noChatFound");
+    }
+  }, []);
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    setText("");
+    if (socket.current) {
+      socket.current.emit("sendMessage", {
+        userId: user._id,
+        messageTo: openChatId.current,
+        text,
+      });
+    }
   };
 
   return (
@@ -18,14 +75,19 @@ const ChatScreen = () => {
         <Header>
           <AccountCircle />
           <Typography variant="h6" style={{ marginLeft: "10px" }}>
-            Anisha Singh
+            {reciever ? reciever.name : "Select a user"}
           </Typography>
         </Header>
-        <MessageContainer></MessageContainer>
-        <InputContainer>
+        <MessageContainer>
+          {messages.map((message, index) => (
+            <Message messageWith={reciever} message={message} key={index} />
+          ))}
+          <EndOfMessage ref={endOfMessagesRef} />
+        </MessageContainer>
+        <InputContainer onSubmit={sendMessage}>
           <InsertEmoticonIcon />
-          <Input />
-          <SendButton type="submit">
+          <Input value={text} onChange={(e) => setText(e.target.value)} />
+          <SendButton type="submit" disabled={!text}>
             <SendIcon />
           </SendButton>
         </InputContainer>
@@ -43,21 +105,22 @@ const Container = styled.div`
   min-width: 850px;
   border: 2px solid whitesmoke;
   border-radius: 10px;
-  min-height: 85vh;
+  height: 85vh;
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
-  background-color: whitesmoke;
+  background-color: rgb(0, 125, 254);
   padding: 10px 15px;
   border-radius: 10px;
+  color: white;
 `;
 
 const MessageContainer = styled.div`
   padding: 30px;
-
-  flex: 3;
+  min-height: 70vh;
+  overflow-y: scroll;
 `;
 const InputContainer = styled.form`
   display: flex;
@@ -78,6 +141,10 @@ const Input = styled.input`
   margin-left: 15px;
   margin-right: 15px;
   background-color: whitesmoke;
+`;
+
+const EndOfMessage = styled.div`
+  margin-bottom: 10px;
 `;
 
 const SendButton = styled.button`

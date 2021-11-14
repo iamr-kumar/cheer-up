@@ -16,6 +16,8 @@ import CreateIcon from "@material-ui/icons/Create";
 import PeopleIcon from "@material-ui/icons/People";
 import Link from "next/link";
 import { AddCircle } from "@material-ui/icons";
+import MessageIcon from "@material-ui/icons/Message";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -128,6 +130,7 @@ const Sidebar = ({ open, handleDrawerClose, user }) => {
             </ListItem>
           </Link>
         )}
+
         <Link
           href={
             user.category === "user" ? "/user/therapist" : "/therpist/clients"
@@ -143,6 +146,16 @@ const Sidebar = ({ open, handleDrawerClose, user }) => {
             />
           </ListItem>
         </Link>
+        {user.category === "therapist" && (
+          <Link href="/therapist/message" passHref>
+            <ListItem button>
+              <ListItemIcon>
+                <MessageIcon />
+              </ListItemIcon>
+              <ListItemText primary="Messages" />
+            </ListItem>
+          </Link>
+        )}
       </List>
     </Drawer>
   );
