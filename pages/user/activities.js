@@ -26,34 +26,59 @@ const Activities = ({ activities, tones, err, user, moodHistory }) => {
       </Head>
 
       <Layout user={user}>
-        <Heading>
-          <Typography gutterBottom variant="h4" component="div" align="center">
-            State Detected on the basis of analysis :{" "}
-            <Field>{tones.join()}</Field>
-          </Typography>
-          <Typography gutterBottom variant="h5" component="div" align="center">
-            Here's a collection of some activities you can perform to lighten up
-            your mood!
-          </Typography>
-        </Heading>
-        <Grid container spacing={3}>
-          {activities.map((activity) => (
-            <Grid item xs={6} md={4}>
-              <ChooseActivity
-                activity={activity}
-                btnText="Details"
-                handleOpen={handleToggle}
-              />
+        {activities.length > 0 ? (
+          <>
+            <Heading>
+              <Typography
+                gutterBottom
+                variant="h4"
+                component="div"
+                align="center"
+              >
+                State Detected on the basis of analysis :{" "}
+                <Field>{tones.join()}</Field>
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                align="center"
+              >
+                Here's a collection of some activities you can perform to
+                lighten up your mood!
+              </Typography>
+            </Heading>
+            <Grid container spacing={3}>
+              {activities.map((activity) => (
+                <Grid item xs={6} md={4}>
+                  <ChooseActivity
+                    activity={activity}
+                    btnText="Details"
+                    handleOpen={handleToggle}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
 
-        <ActivityDetail
-          handleClose={handleToggle}
-          open={open}
-          activity={currActivity}
-          moodHistory={moodHistory}
-        />
+            <ActivityDetail
+              handleClose={handleToggle}
+              open={open}
+              activity={currActivity}
+              moodHistory={moodHistory}
+            />
+          </>
+        ) : (
+          <Heading>
+            <Typography
+              gutterBottom
+              variant="h4"
+              component="div"
+              align="center"
+            >
+              Sorry! Could Not Detect Mood. Please Try Again.
+            </Typography>
+          </Heading>
+        )}
       </Layout>
     </>
   );
@@ -94,7 +119,7 @@ export async function getServerSideProps(context) {
     console.log(err);
     return {
       props: {
-        err: JSON.stringify(err),
+        err: err.response.data,
       },
     };
   }

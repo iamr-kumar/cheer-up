@@ -7,6 +7,7 @@ import {
   Button,
 } from "@material-ui/core";
 import styled from "styled-components";
+import Moment from "react-moment";
 
 //Individual activity card in activity list
 const ActivityCard = ({ item }) => {
@@ -28,7 +29,7 @@ const ActivityCard = ({ item }) => {
               {item.activity.description}
             </Typography>
             <Typography variant="body2" style={{ marginTop: 4 }}>
-              Done on : {new Date(item.date).toLocaleDateString()}
+              Done on : <Moment format="MMMM Do YYYY">{item.date}</Moment>
             </Typography>
             <Typography variant="body2" style={{ marginTop: 4 }}>
               Moods: {item.moods.join(", ")}

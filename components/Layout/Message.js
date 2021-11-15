@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import Moment from "react-moment";
 
 const Message = ({ message, messageWith }) => {
   const router = useRouter();
@@ -10,7 +11,9 @@ const Message = ({ message, messageWith }) => {
     <Container>
       <TypeOfMessage>
         {message.msg}
-        <TimeStamp>Today</TimeStamp>
+        <TimeStamp>
+          <Moment format="LT" date={message.date} />
+        </TimeStamp>
       </TypeOfMessage>
     </Container>
   );

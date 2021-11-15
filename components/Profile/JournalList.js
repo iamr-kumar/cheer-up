@@ -3,7 +3,7 @@ import React from "react";
 import JournalCard from "./JournalCard";
 import { Scrollbars } from "react-custom-scrollbars";
 import JournalDetail from "./JournalDetail";
-const JournalList = ({}) => {
+const JournalList = ({ journals }) => {
   const journal = {
     title: "I m the title",
     date: "September 14, 2016",
@@ -19,18 +19,21 @@ const JournalList = ({}) => {
   return (
     <>
       <Typography variant="h5">Journals</Typography>
-      <Scrollbars
-        style={{ height: 650 }}
-        universal={true}
-        autoHide
-        autoHideTimeout={1000}
-        autoHideDuration={200}
-      >
-        <JournalCard journal={journal} handleOpen={handleToggle} />
-        <JournalCard journal={journal} handleOpen={handleToggle} />
-        <JournalCard journal={journal} handleOpen={handleToggle} />
-        <JournalCard journal={journal} handleOpen={handleToggle} />
-      </Scrollbars>
+      {journals && journals.length > 0 ? (
+        <Scrollbars
+          style={{ height: 650 }}
+          universal={true}
+          autoHide
+          autoHideTimeout={1000}
+          autoHideDuration={200}
+        >
+          {journals.map((journal) => (
+            <JournalCard journal={journal} handleOpen={handleToggle} />
+          ))}
+        </Scrollbars>
+      ) : (
+        <Typography variant="h6">Nothing to show here... yet</Typography>
+      )}
 
       <JournalDetail
         handleClose={handleToggle}

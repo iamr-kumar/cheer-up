@@ -14,9 +14,15 @@ import {
   Radio,
   RadioGroup,
   CircularProgress,
+  Snackbar,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { registerUser } from "../utils/authUser";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Signup = () => {
   const [formState, setFormState] = useState({
@@ -26,6 +32,7 @@ const Signup = () => {
     category: "",
   });
   const router = useRouter();
+  const [error, setError] = useState(null);
 
   const { name, email, password, category } = formState;
 
@@ -44,10 +51,12 @@ const Signup = () => {
       category === "user" && router.push("/user/create-profile");
       category === "therapist" && router.push("/therapist/create-profile");
     } catch (err) {
-      console.log(err.errors);
+      setError(err.response.data.errors[0].msg);
       setLoading(false);
     }
   };
+
+  const handleDone = () => setError(null);
 
   return (
     <>
@@ -141,6 +150,15 @@ const Signup = () => {
               </Container>
             </SingupContainer>
           </InfoContainer>
+          <Snackbar
+            open={error !== null ? true : false}
+            autoHideDuration={6000}
+            onClose={handleDone}
+          >
+            <Alert onClose={handleDone} severity="error">
+              {error}
+            </Alert>
+          </Snackbar>
         </Grid>
         <Grid container item lg={6} md={12}>
           <ImageContainer src="./vector-image.jpg" />

@@ -19,7 +19,7 @@ function Alert(props) {
 }
 
 //journal writing page
-const Journ = ({ user }) => {
+const Journ = ({ user, list }) => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const token = Cookies.get("token");
@@ -86,7 +86,7 @@ const Journ = ({ user }) => {
 
         <Grid item xs={12} lg={5} sm={12}>
           <GridBox>
-            <JournalList />
+            <JournalList journals={list} />
           </GridBox>
         </Grid>
       </Grid>

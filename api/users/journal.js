@@ -32,9 +32,10 @@ router.post("/new", auth, async (req, res) => {
   }
 });
 
-router.get("/all/:id", async (req, res) => {
+router.get("/all", auth, async (req, res) => {
   try {
-    const journals = await Journal.find({ userId: req.params.id });
+    const journals = await Journal.find({ userId: req.user.id });
+
     res.json({ journals });
   } catch (err) {
     console.log(err);

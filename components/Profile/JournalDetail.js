@@ -6,18 +6,11 @@ import {
   Typography,
   Slide,
   AppBar,
-  Button,
-  Backdrop,
-  CircularProgress,
-  Snackbar,
 } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/Alert";
+
 import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
-import axios from "axios";
-import { baseUrl } from "../../utils/config";
-import Cookies from "js-cookie";
-import { makeStyles } from "@material-ui/core/styles";
+import Moment from "react-moment";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -40,7 +33,7 @@ const JournalDetail = (props) => {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={handleClose}
+              onClick={() => handleClose(null)}
               aria-label="close"
             >
               <CloseIcon />
@@ -52,16 +45,16 @@ const JournalDetail = (props) => {
           <div>
             <TitleContainer>
               <Typography variant="h4" color="inherit">
-                {journal.title}
+                {journal.moods && journal.moods.join(", ")}
               </Typography>
             </TitleContainer>
             <JournalDate>
               <Typography variant="body1" color="textSecondary">
-                {journal.date}
+                <Moment format="MMMM Do YYYY">{journal.date}</Moment>
               </Typography>
             </JournalDate>
             <JournalDescription>
-              <Typography variant="paragraph">{journal.detail}</Typography>
+              <Typography variant="paragraph">{journal.text}</Typography>
             </JournalDescription>
           </div>
         </Container>

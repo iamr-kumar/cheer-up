@@ -9,15 +9,17 @@ const { calcMoodPercent } = require("../../config/moodAction");
 
 router.get("/me", auth, async (req, res) => {
   try {
-    const profile = await UserProfile.findOne({ user: req.user.id }).populate({
-      path: "therapist",
-      model: "TherapistProfile",
-      populate: {
-        path: "user",
-        model: "user",
-        select: "-password",
-      },
-    });
+    const profile = await UserProfile.findOne({ user: req.user.id })
+      .populate({
+        path: "therapist",
+        model: "TherapistProfile",
+        populate: {
+          path: "user",
+          model: "user",
+          select: "-password",
+        },
+      })
+      .populate("user");
     const today = new Date();
     const past7Day = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
     const moodHistory = await MoodHistory.find({
@@ -134,6 +136,15 @@ router.get("/user/:id", auth, async (req, res) => {
         $lt: today,
       },
     }).populate("activities");
+    const activityHistory = moodHistory.map((mood) => {
+      return mood.activities.map((activity) => {
+        return {
+          moods: mood.moods,
+          activity,
+          date: mood.date,
+        };
+      });
+    });
     const journals = await Journal.find({
       userId: userProfile.user,
       date: {
@@ -143,7 +154,12 @@ router.get("/user/:id", auth, async (req, res) => {
     });
     const moodPercentage = calcMoodPercent(moodHistory, journals);
     if (userProfile) {
-      return res.json({ userProfile, moodHistory, journals, moodPercentage });
+      return res.json({
+        userProfile,
+        activityHistory,
+        journals,
+        moodPercentage,
+      });
     } else {
       return res.status(404).json({ msg: "User profile not found" });
     }

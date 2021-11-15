@@ -12,16 +12,23 @@ import {
   Typography,
   Container,
   CircularProgress,
+  Snackbar,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { loginUser } from "../utils/authUser";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Login = () => {
   const router = useRouter();
 
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { email, password } = formState;
 
   const onChange = (e) => {
@@ -37,10 +44,12 @@ const Login = () => {
 
       router.push("/user/profile");
     } catch (err) {
-      console.log(err);
+      setError(err.response.data.errors[0].msg);
       setLoading(false);
     }
   };
+
+  const handleDone = () => setError(null);
 
   return (
     <>
@@ -113,6 +122,15 @@ const Login = () => {
               </Container>
             </SingupContainer>
           </InfoContainer>
+          <Snackbar
+            open={error !== null ? true : false}
+            autoHideDuration={6000}
+            onClose={handleDone}
+          >
+            <Alert onClose={handleDone} severity="error">
+              {error}
+            </Alert>
+          </Snackbar>
         </Grid>
         <Grid container item lg={6} md={12}>
           <ImageContainer src="./vector-image.jpg" />

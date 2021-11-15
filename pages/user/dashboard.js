@@ -47,7 +47,7 @@ export async function getServerSideProps(context) {
         "auth-token": token,
       },
     });
-
+    console.log(res.data.profile);
     return {
       props: {
         profile: res.data.profile,

@@ -5,7 +5,7 @@ const PatientList = ({ clients }) => {
   return (
     <div>
       <Typography gutterBottom variant="h3" component="div" align="center">
-        My Clients.
+        My Clients
       </Typography>
       <Grid container spacing={4}>
         {clients.map((client) => (

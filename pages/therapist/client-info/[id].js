@@ -4,7 +4,7 @@ import PatientData from "../../../components/Therapist/PatientData";
 import ActivityList from "../../../components/Profile/ActivityList";
 import JournalList from "../../../components/Profile/JournalList";
 import MoodGraph from "../../../components/Therapist/MoodGraph";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { parseCookies } from "nookies";
 import axios from "axios";
 import { baseUrl } from "../../../utils/config";
@@ -12,7 +12,7 @@ import { baseUrl } from "../../../utils/config";
 const PatientInfo = ({
   user,
   userProfile,
-  moodHistory,
+  activityHistory,
   journals,
   moodPercentage,
 }) => {
@@ -38,16 +38,23 @@ const PatientInfo = ({
               <MoodGraph moods={moodPercentage} />
             </div>
           </Grid>
-          {/* <Grid item xs={12} lg={6} sm={12} style={{ display: "grid" }}>
+          <Grid item xs={12} lg={6} sm={12} style={{ display: "grid" }}>
             <div>
-              <ActivityList />{" "}
+              <Typography variant="h5">Activity History</Typography>
+              {activityHistory.length > 0 ? (
+                <ActivityList list={activityHistory} />
+              ) : (
+                <Typography variant="h6" gutterBottom>
+                  Nothing to show here... yet
+                </Typography>
+              )}
             </div>
           </Grid>
           <Grid item xs={12} lg={6} sm={12} style={{ display: "grid" }}>
             <div>
-              <JournalList />{" "}
+              <JournalList journals={journals} />
             </div>
-          </Grid> */}
+          </Grid>
         </Grid>
       </Layout>
     </>
@@ -65,12 +72,12 @@ export async function getServerSideProps(context) {
         "auth-token": token,
       },
     });
-    const { userProfile, moodHistory, journals, moodPercentage } = res.data;
+    const { userProfile, activityHistory, journals, moodPercentage } = res.data;
 
     return {
       props: {
         userProfile,
-        moodHistory,
+        activityHistory,
         journals,
         moodPercentage,
       },
