@@ -34,9 +34,15 @@ const ChatScreen = ({ socket, user }) => {
         openChatId.current = chat.messageWith._id;
         scrollToBottom();
       });
+
+      socket.current.on("noChatFound", ({ user }) => {
+        setReciever(user);
+        openChatId.current = user._id;
+      });
     };
 
     if (socket.current) {
+      setMessages([]);
       loadMessages();
     }
   }, [router.query.message]);

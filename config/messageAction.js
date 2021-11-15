@@ -10,7 +10,8 @@ const loadMessages = async (userId, messageWith) => {
       (chat) => chat.messageWith._id.toString() === messageWith
     );
     if (!chat) {
-      return { error: "Chat not found" };
+      const user = await User.findById(messageWith).select("-password");
+      return { user };
     }
     return { chat };
   } catch (err) {
@@ -20,6 +21,7 @@ const loadMessages = async (userId, messageWith) => {
 };
 
 const sendMessage = async (userId, messageWith, message) => {
+  console.log(userId, messageWith, message);
   try {
     const user = await ChatModel.findOne({ user: userId });
     if (!user) {

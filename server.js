@@ -26,11 +26,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("loadMessages", async ({ userId, messageWith }) => {
-    const { chat, error } = await loadMessages(userId, messageWith);
-    if (!error) {
+    const { chat, user } = await loadMessages(userId, messageWith);
+    if (!user) {
       socket.emit("messagesLoaded", { chat });
     } else {
-      socket.emit("noChatFound");
+      socket.emit("noChatFound", { user });
     }
   });
 

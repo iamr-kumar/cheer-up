@@ -51,7 +51,7 @@ const MoodGraph = ({ moods }) => {
   return (
     <ChartDiv>
       <h2>Mood Graph for last month</h2>
-      {moods ? (
+      {moodsArray && moodsArray.length > 0 ? (
         <Doughnut
           data={data}
           height={500}

@@ -58,6 +58,10 @@ const Messages = ({ user }) => {
         scrollToBottom();
       }
     });
+    socket.current.on("noChatFound", ({ user }) => {
+      setReciever(user);
+      openChatId.current = user._id;
+    });
 
     socket.current.on("newMessage", async ({ newMessage }) => {
       console.log("newMessage", newMessage);
