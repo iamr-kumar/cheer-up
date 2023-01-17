@@ -1,1 +1,1 @@
-export const baseUrl = "https://next-cheerup.herokuapp.com";
+export const baseUrl = "http://localhost:3000";
