@@ -8,9 +8,12 @@ services:
       - '3001:3001'
     environment:
       PORT: 3001
-      MONGO_DB_URI: mongodb://mongo_db:27017
+      MONGODB_URI: mongodb://mongo_db:27017
       DB_NAME: cheer-up
       NAME: ritik
+      JWT_SECRET: my-jwt-secret
+      WATSON_API_KEY: api-key
+      SERVICE_URL: service-url
     depends_on:
       - mongo_db
 
@@ -18,7 +21,7 @@ services:
     container_name: db_container
     image: mongo:latest
     volumes:
-      - mongo_db/data/db
+      - mongo_db:/data/db
     ports:
       - '27012:27017'
 

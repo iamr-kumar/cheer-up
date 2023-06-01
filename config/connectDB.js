@@ -8,6 +8,7 @@ const db = process.env.MONGODB_URI;
 const connectDB = () => {
   mongoose
     .connect(db, {
+      dbName: process.env.DB_NAME,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
